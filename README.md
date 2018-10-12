@@ -4,69 +4,95 @@
 
 A Discord bot for text-based commands and responses.
 
-This may sound like any other bot at first, but this is much more than basic text.
+This may sound like any other bot at first, but this is **much** more than basic text.
 
 ----------------------------------
 
 LIST OF COMMANDS
-*Using prefix of server this message was activated from*
+*Using default server prefix*
 ---
->txt.help
-Summons this help list
+>__txt.help__
+Summons this help list.
  
->txt.emojify
-Turn all characters into emojis
-*Format: txt.emojify [message]*
-
->txt.ebojify
-Turn certain characters into :b:️
-*Format: txt.ebojify [message]*
+>__txt.about__
+Gives information about the bot.
  
->txt.oof
+>__txt.oof__
 Mega OOF
  
->txt.f
+>__txt.f__
 Mega F
  
->txt.overcomp
-Replaces all words with synonyms of the word.
-*Format: txt.overcomp [message]*
+>__txt.pi__
+First 1 million digits of Pi
  
->txt.wordinfo
+>__txt.emojify__
+Turn all characters into emojis.
+*Format: txt.emojify [text]*
+ 
+>__txt.ebojify__
+Turn certain characters into :b:.
+*Format: txt.ebojify [text]*
+ 
+>__txt.superscript__
+Turn all numbers and letters plus a few math symbols into superscript. Some letters are always lowercase or replaced with something similar due to Unicode limitations.
+*Format: txt.superscript [text]*
+ 
+>__txt.unicodify__
+Turn all numbers and letters into a non-Latin equivilant.
+*Format: txt.unicodify [text]*
+ 
+>__txt.bold__
+Bolds all Latin letters and numbers using Unicode.
+*Format: txt.bold [text]*
+ 
+>__txt.replace__
+Replaces every appearance of a set item with a set replacement.
+*Format: txt.replace [item] [replacement] [text]*
+ 
+>__txt.overcomp__
+Replaces all words with synonyms of the word.
+*Format: txt.overcomp [text]*
+ 
+>__txt.wordinfo__
 Get the definition or Part-of-Speech of a word.
 *Format: txt.wordinfo [def|pos] [word]*
  
->txt.asciiart
+>__txt.asciiart__
 Generate ascii art. Over 15 characters responds with a file.
-*Format: txt.asciiart [message|{Font:[Font (use "_" as space)]}|{getFonts}] [message]*
+*Format: txt.asciiart [text|{Font:[Font (use "_" as space)]}|{getFonts}] [text]*
  
->txt.cmds
+>__txt.cmds__
 View and manage custom server commands, managing requires "Manage Messages" perms.
 *Format: txt.cmds [manage|view] [set|delete] [activator] [reply (multiword)]*
  
->txt.prefix
+>__txt.prefix__
 Get prefix for any server or set the current server's prefix, setting prefix requires "Manage Messages" perms.
 *Format: txt.prefix [get|set] [server ID|new prefix]*
  
->txt.speak
+>__txt.setnick__
+Set the bot's Nickname on the server. Reset with "{RESET}". Requires "Manage Messages" or "Change Nicknames".
+*Format: txt.setnick [nickname|{RESET}]*
+ 
+>__txt.speak__
 Generate a sentence, repeat messages, toggle and get status of random generated messages, toggling requires "Manage Messages" perms. Random messages off by default.
 *Format: txt.speak [generate|repeat|toggleRandSpeak|randSpeakStatus] [channel ID or channel tag] [message]*
  
->txt.combos
+>__txt.combos__
 Sends file with all possible combinations of the units you have selected and given.
 *Format: txt.combos [words|characters] [items]*
  
->txt.listen
+>__txt.listen__
 Relays text channels into your DMs. Only allows listening to channels everyone can see. Servers are able to individually opt out. Opted in by default.
 *Format: txt.listen [channel ID or channel tag|stop|list|opt] [channel ID or channel tag|set|check] [serverID|in or out]*
  
->Mention me
-I respond "What's :b:️oppin'"
+>__Mention me__
+I respond "What's 🅱️oppin'"
  
->Mention me with message "PREFIX"
+>__Mention me with message "PREFIX"__
 I respond with the server's prefix and the help command.
  
->Generated messages
+>__Generated messages__
 Fully generated messages (not an AI so they're terrible and don't make sense) that can be toggled to randomly say them in response to other messages. Random messages will not reply to commands.
 
 ----------------------------------
@@ -78,8 +104,9 @@ GENERAL DETAILS
 >Many fallbacks to help you format the command are in place.
 >All in-any-way controversial features are toggleable.
 >Custom commands are activated like normal commands. | *Ex: txt.[trigger] w/ default prefix*
+>ALL commands (except for some modifiers) work with aNY CapItaLIzATIoN.
 >"@bot PREFIX" works with aNy cApITalIzaTiOn.
->All commands work in DMs. (Except for the opt function in DMs, as it's not needed)
+>All commands work in DMs. (Except for some exeptions due to Discord's limits.)
 >This bot has 8 different dependencies.
 
 ----------------------------------

@@ -15,7 +15,7 @@ console.log('Starting bot...')
 bot.on('ready', () => {
     console.log('Bot Started! ' + `Current time: ${Date().split(' ').slice(1, 5).join(' ')} ${Date().split(' ').slice(6, 7).join(' ')}`)
     console.log('--------------------')
-    bot.user.setActivity('Bot.txt Soon Completed')
+    bot.user.setActivity('@me PREFIX [Unstable]')
 })
 
 bot.on('message', (message) => {
@@ -77,20 +77,27 @@ bot.on('message', (message) => {
             .setColor(0x0096ff)
             .setAuthor('Commands List', bot.user.avatarURL)
             .setDescription('*Using prefix of server this message was activated from*')
-            .addField(`**------------------------**\n_ _\n${prefix}help`, `Summons this help list`)
-            .addField(`_ _\n${prefix}emojify`, `Turn all characters into emojis\n*Format: ${prefix}emojify [message]*`)
-            .addField(`_ _\n${prefix}ebojify`, `Turn certain characters into 🅱️\n*Format: ${prefix}ebojify [message]*`)
+            .addField(`**------------------------**\n_ _\n${prefix}help`, `Summons this help list.`)
+            .addField(`_ _\n${prefix}about`, 'Gives information about the bot.')
             .addField(`_ _\n${prefix}oof`, `Mega OOF`)
             .addField(`_ _\n${prefix}f`, `Mega F`)
-            .addField(`_ _\n${prefix}overcomp`, `Replaces all words with synonyms of the word.\n*Format: ${prefix}overcomp [message]*`)
+            .addField(`_ _\n${prefix}pi`, `First 1 million digits of Pi`)
+            .addField(`_ _\n${prefix}emojify`, `Turn all characters into emojis.\n*Format: ${prefix}emojify [text]*`)
+            .addField(`_ _\n${prefix}ebojify`, `Turn certain characters into :b:.\n*Format: ${prefix}ebojify [text]*`)
+            .addField(`_ _\n${prefix}superscript`, `Turn all numbers and letters plus a few math symbols into superscript. Some letters are always lowercase or replaced with something similar due to Unicode limitations.\n*Format: ${prefix}superscript [text]*`)
+            .addField(`_ _\n${prefix}unicodify`, `Turn all numbers and letters into a non-Latin equivilant.\n*Format: ${prefix}unicodify [text]*`)
+            .addField(`_ _\n${prefix}bold`, `Bolds all Latin letters and numbers using Unicode.\n*Format: ${prefix}bold [text]*`)
+            .addField(`_ _\n${prefix}replace`, `Replaces every appearance of a set item with a set replacement.\n*Format: ${prefix}replace [item] [replacement] [text]*`)
+            .addField(`_ _\n${prefix}overcomp`, `Replaces all words with synonyms of the word.\n*Format: ${prefix}overcomp [text]*`)
             .addField(`_ _\n${prefix}wordinfo`, `Get the definition or Part-of-Speech of a word.\n*Format: ${prefix}wordinfo [def|pos] [word]*`)
-            .addField(`_ _\n${prefix}asciiart`, `Generate ascii art. Over 15 characters responds with a file.\n*Format: ${prefix}asciiart [message|{Font:[Font (use "_" as space)]}|{getFonts}] [message]*`)
+            .addField(`_ _\n${prefix}asciiart`, `Generate ascii art. Over 15 characters responds with a file.\n*Format: ${prefix}asciiart [text|{Font:[Font (use "_" as space)]}|{getFonts}] [text]*`)
             .addField(`_ _\n${prefix}cmds`, `View and manage custom server commands, managing requires "Manage Messages" perms.\n*Format: ${prefix}cmds [manage|view] [set|delete] [activator] [reply (multiword)]*`)
             .addField(`_ _\n${prefix}prefix`, `Get prefix for any server or set the current server's prefix, setting prefix requires "Manage Messages" perms.\n*Format: ${prefix}prefix [get|set] [server ID|new prefix]*`)
+            .addField(`_ _\n${prefix}setnick`, `Set the bot's Nickname on the server. Reset with "{RESET}". Requires "Manage Messages" or "Change Nicknames".\n*Format: ${prefix}setnick [nickname|{RESET}]*`)
             .addField(`_ _\n${prefix}speak`, `Generate a sentence, repeat messages, toggle and get status of random generated messages, toggling requires "Manage Messages" perms. Random messages off by default.\n*Format: ${prefix}speak [generate|repeat|toggleRandSpeak|randSpeakStatus] [channel ID or channel tag] [message]*`)
             .addField(`_ _\n${prefix}combos`, `Sends file with all possible combinations of the units you have selected and given.\n*Format: ${prefix}combos [words|characters] [items]*`)
             .addField(`_ _\n${prefix}listen`, `Relays text channels into your DMs. Only allows listening to channels everyone can see. Servers are able to individually opt out. Opted in by default.\n*Format: ${prefix}listen [channel ID or channel tag|stop|list|opt] [channel ID or channel tag|set|check] [serverID|in or out]*`)
-            .addField(`_ _\nMention me`, `I respond "What's 🅱️oppin'"`)
+            .addField(`_ _\nMention me`, `I respond "What's :b:oppin'"`)
             .addField(`_ _\nMention me with message "PREFIX"`, `I respond with the server's prefix and the help command.`)
             .addField(`_ _\nGenerated messages`, `Fully generated messages *(not an AI so they're terrible and don't make sense)* that can be toggled to randomly say them in response to other messages. Random messages will not reply to commands.`)
         //send
@@ -114,9 +121,11 @@ bot.on('message', (message) => {
 
     if (command == `${prefix}ebojify`) {
         //remove prefix and prepare statement
-        msgpre = message.content.toLowerCase().replace(`${prefix}ebojify `, '').replace(/no/g, "yesn't").replace(/yes/g, "non't");
+        msgpre = message.content.toLowerCase().replace(`${prefix}ebojify `, '')
+            .replace(/no/g, "yesn't").replace(/yes/g, "non't");
         //replace with 🅱 
-        msg = msgpre.replace(/b/g, '🅱️').replace(/p/g, '🅱️').replace(/g/g, '🅱️').replace(/c/g, '🅱️').replace(/d/g, '🅱️');
+        msg = msgpre.replace(/b/g, '🅱️').replace(/p/g, '🅱️').replace(/g/g, '🅱️')
+            .replace(/c/g, '🅱️').replace(/d/g, '🅱️');
         //send
         message.channel.send(msg);
         cmd.logmsg(msg, message, bot);
@@ -175,7 +184,7 @@ bot.on('message', (message) => {
         return
     }
 
-    if (command == `${prefix}cmds`) {
+    if (command == `${prefix}cmds`) { //make lowercase
         //select command manage
         if (args[0] == 'manage') {
             //test for guild
@@ -270,7 +279,7 @@ bot.on('message', (message) => {
         return
     }
 
-    if (command == `${prefix}prefix`) {
+    if (command == `${prefix}prefix`) { //make lowercase
         //select command
         if (args[0] == 'get' && args[1]) {
             //grab stored prefix and send
@@ -688,20 +697,20 @@ bot.on('message', (message) => {
                     //executes if permissions are correct
                     //test if server disabled relays 
                     if (cmd.listenerOpt('check', getGuildID)) {
-                    //add listener and test for duplicate
-                    if (cmd.listener('add', message, bot, args)) {
-                        //not duplicate
-                        msg = `Success! All messages in <#${channelID}> now get relayed into your DMs.\n \n*To stop relaying messages, use: ${prefix}listen stop [channel ID or tag]*`
+                        //add listener and test for duplicate
+                        if (cmd.listener('add', message, bot, args)) {
+                            //not duplicate
+                            msg = `Success! All messages in <#${channelID}> now get relayed into your DMs.\n \n*To stop relaying messages, use: ${prefix}listen stop [channel ID or tag]*`
+                        } else {
+                            //duplicate
+                            msg = `You're already being relayed <#${channelID}>!\n \n*To stop relaying messages, use: ${prefix}listen stop [channel ID or tag]*`
+                        }
                     } else {
-                        //duplicate
-                        msg = `You're already being relayed <#${channelID}>!\n \n*To stop relaying messages, use: ${prefix}listen stop [channel ID or tag]*`
+                        //server disabled
+                        msg = `Sorry, the server hosting <#${channelID}> disabled listening.`
+                        //remove listener if one already exists
+                        cmd.listener('remove', message, bot, ['', channelID])
                     }
-                } else {
-                    //server disabled
-                    msg = `Sorry, the server hosting <#${channelID}> disabled listening.`
-                    //remove listener if one already exists
-                    cmd.listener('remove', message, bot, ['', channelID])
-                }
                 }
                 //tests perms
                 if (chanPerm && fullPerm) {
@@ -735,18 +744,169 @@ bot.on('message', (message) => {
         return
     }
 
-    //In development
-    if (command == `${prefix}speakalpha`) {
-        var msg = talk.speakV2()
+    if (command == `${prefix}setnick`) {
+        //set higher variable
+        var msg
+        //check if guild
+        if (message.guild) {
+            //in server & test for args
+            if (args[0]) {
+                //test for perms
+                if (message.guild.member(message.author.id).hasPermission('MANAGE_NICKNAMES') || message.guild.member(message.author.id).hasPermission('MANAGE_MESSAGES')) {
+                    //test if resetting
+                    if (args[0] == `{RESET}`) {
+                        //reset, respond accordingly
+                        message.guild.member(bot.user).setNickname(null)
+                        msg = `Nickname reset!`
+                    } else {
+                        //set nickname, respond accordingly
+                        message.guild.member(bot.user).setNickname(args[0])
+                        msg = `Nickname set!`
+                    }
+                } else {
+                    //no perms fallback
+                    msg = `You don't have permission: "Manage Nicknames" or "Manage Messages". Sorry!`
+                }
+            } else {
+                //state format
+                msg = `Format: ${prefix}setnick [nickname|{RESET}]`
+            }
+        } else {
+            //fallback for DMs
+            msg = `Sorry! This command is only available in servers because nicknames aren't possible in DMs.`
+        }
+        //send message & log & prevent running unneeded code
         message.channel.send(msg)
         cmd.logmsg(msg, message, bot)
         return
     }
 
+    if (command == `${prefix}about`) {
+        //create embed about bot
+        var embed = new Discord.RichEmbed()
+            .setColor(0x0096ff)
+            .setAuthor('About TRAS', bot.user.avatarURL)
+            .setTitle('Text-based Response Automation System')
+            .addField('_ _\nWebsite: https://tras.illegaldomain.com', 'Not actually illegal, a lot of info on-site.')
+            .addField('_ _\nAdd Link: http://bit.ly/addtras', '_ _')
+            .addField(`_ _\nGrab prefix & help command:`, `<@${bot.user.id}> PREFIX`)
+            .addField('_ _\nCreated By: Nathan B', 'AKA @10Nates / Discord ID: 186507006008360960')
+            .addField('_ _\nNPM Modules Used:', ']Discord.js\n]Edit-json-file\n]Figlet\n]Moby\n]Remove-punctuation\n]Wink-pos-tagger\nWord-definition\n]Word-list')
+            .addField('_ _\nOther Credit:', `All the scripts and knowledge found on Stack Overflow, Stack Exchange, Reddit, An Idiot's Guide, Nodejs.org, and Discord.js.org.`)
+            .addField('_ _\nLegal:', 'TRAS is under the GNU general public license. see info here: http://bit.ly/GPLv3summary')
+            .addBlankField()
+            .setImage('https://tras.illegaldomain.com/img/traslogo.png')
+        //send embed to author
+        message.author.send(embed)
+        //respond in original channel
+        message.channel.send(`I sent you info in your DMs.`)
+        //log
+        cmd.logmsg('Sent Embed of Info', message, bot)
+    }
+
+    if (command == `${prefix}superscript`) {
+        //set higher argument
+        var msg
+        //test for args
+        if (args[0]) {
+            //args found, set variable
+            var text = args.join(' ')
+            //generate superscript
+            var SupScr = cmd.superScript(text)
+            //set message
+            msg = SupScr
+        } else {
+            //state format
+            msg = `Format: ${prefix}superscript [text]`
+        }
+        //send message & log & prevent unneeded code
+        message.channel.send(msg)
+        cmd.logmsg(msg, message, bot)
+        return
+    }
+
+    if (command == `${prefix}unicodify`) {
+        //set higher argument
+        var msg
+        //test for args
+        if (args[0]) {
+            //args found. set variable
+            var text = args.join(' ')
+            //generate unicode
+            var SupScr = cmd.unicodify(text)
+            //set message
+            msg = SupScr
+        } else {
+            //state format
+            msg = `Format: ${prefix}unicodify [text]`
+        }
+        //send message & log & prevent unneeded code
+        message.channel.send(msg)
+        cmd.logmsg(msg, message, bot)
+        return
+    }
+
+    if (command == `${prefix}bold`) {
+        //set higher argument
+        var msg;
+        //test for args
+        if (args[0]) {
+            //args found, generate bold text
+            msg = cmd.bold(args.join(' '))
+        } else {
+            //state format
+            msg = `Format: ${prefix}bold [text]`
+        }
+        //send message & log & prevent unneeded code
+        message.channel.send(msg)
+        cmd.logmsg(msg, message, bot)
+        return
+    }
+
+    if (command == `${prefix}replace`) {
+        //set higher argument
+        var msg;
+        //test for all needed args
+        if (args[0] && args[1] && args[2]) {
+            //args found, set variable
+            var text = args.slice(2, args.length).join(' ')
+            //generate replaced text & set message
+            msg = cmd.replace(args[0], args[1], text)
+        } else {
+            //state format
+            msg = `Format: ${prefix}replace [item] [replacement] [text]`
+        }
+        //send message & log & prevent unneeded code
+        message.channel.send(msg)
+        cmd.logmsg(msg, message, bot)
+        return
+    }
+
+    if (command == `${prefix}pi`) {
+        //create embed
+        var msg = new Discord.RichEmbed()
+                .setColor(0x0096ff)
+                .setTitle("Here's the first 1 million (10⁶) digits of Pi.")
+                .setDescription("First 20: `3.1415926535897932384`")
+                .attachFile('./pi-1mil.txt')
+        //send and prevent running unneeded code
+        message.channel.send(msg)
+        cmd.logmsg(msg, message, bot)
+        return
+    }
+
+    //In development
+    /*    if (command == `${prefix}speakalpha`) {
+            var msg = talk.speakV2()
+            message.channel.send(msg)
+            cmd.logmsg(msg, message, bot)
+            return
+        }
+    */
+
     //Non-triggered and alternatively triggered commands
-    if (message.isMemberMentioned(bot.users.get('462051981863682048')) && message.channel.id != '449759068941189151') { //change if changing bot login
-        //remove tag and spaces & check if prefix is called
-        if (message.content.replace(/<@462051981863682048>| /g, '').toLowerCase() == 'prefix') { //change if changing bot login
+    if (message.isMemberMentioned(bot.users.get(bot.user.id)) && message.channel.id != '449759068941189151') {
+        if (message.content.replace(new RegExp(`<@${bot.user.id}>`, 'g'), '').replace(/ /g, '').toLowerCase() == 'prefix') { //Change if changing bot login
             //create higher variable
             var premsg
             //set message with custom response
@@ -765,7 +925,7 @@ bot.on('message', (message) => {
     }
 
     //random message responses
-    if (message.author.id != '462051981863682048' && message.channel.id != '449759068941189151') { //change if changing bot login
+    if (message.author.id != bot.user.id && message.channel.id != '449759068941189151') {
         //randomize
         var r = Math.random() * 100
         if (r < 12) {
@@ -816,4 +976,4 @@ bot.on('message', (message) => {
 
 });
 
-bot.login(process.env.Token);
+bot.login(process.env.Token); //If changing, search and replace "//Change if changing bot login"

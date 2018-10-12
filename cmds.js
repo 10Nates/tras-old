@@ -8,6 +8,7 @@ ChanID = '458821920138330115'; //by default goes to a #null-channel
 
 //Normal functions
 function cleanArray(actual) {
+    //not made by me lol
     var newArray = new Array();
     for (var i = 0; i < actual.length; i++) {
         if (actual[i]) {
@@ -17,6 +18,7 @@ function cleanArray(actual) {
     return newArray;
 }
 function getlength(number) {
+    //just returns length
     return number.toString().length;
 }
 
@@ -113,55 +115,19 @@ module.exports = {
         }
     },
 
-    emojiconvert: function emojiconvert(msgstart) {
-        //replaces all letters with emojis. Really terribly compacted due to age.
-        msg1 = msgstart.replace(/a/g, '🅰');
-        msg2 = msg1.replace(/b/g, '🅱️');
-        msg3 = msg2.replace(/c/g, '©️');
-        msg4 = msg3.replace(/d/g, '🇩');
-        msg5 = msg4.replace(/e/g, '🇪');
-        msg6 = msg5.replace(/f/g, '🇫');
-        msg7 = msg6.replace(/g/g, '🇬');
-        msg8 = msg7.replace(/h/g, '♓');
-        msg9 = msg8.replace(/i/g, 'ℹ️');
-        msg10 = msg9.replace(/j/g, '🇯');
-        msg11 = msg10.replace(/k/g, '🇰');
-        msg12 = msg11.replace(/l/g, '🇱');
-        msg13 = msg12.replace(/m/g, '♏️');
-        msg14 = msg13.replace(/n/g, '🇳');
-        msg15 = msg14.replace(/o/g, '🅾️');
-        msg16 = msg15.replace(/p/g, '🅿️');
-        msg17 = msg16.replace(/q/g, '🇶');
-        msg18 = msg17.replace(/r/g, '®️');
-        msg19 = msg18.replace(/s/g, '💲');
-        msg20 = msg19.replace(/t/g, '✝️');
-        msg21 = msg20.replace(/u/g, '🇺');
-        msg22 = msg21.replace(/v/g, '🇻');
-        msg23 = msg22.replace(/w/g, '🇼');
-        msg24 = msg23.replace(/x/g, '❌');
-        msg25 = msg24.replace(/y/g, '🇾');
-        msg26 = msg25.replace(/z/g, '🇿');
-        msg27 = msg26.replace(/ /g, ' ⬜ ');
-        msg28 = msg27.replace(/!/g, '❗️');
-        msg29 = msg28.replace('?', '❓');
-        msg30 = msg29.replace(/©️🇱/g, '🆑');
-        msg31 = msg30.replace(/🅰🅱️/g, '🆎');
-        msg32 = msg31.replace(/🅾️🇰/g, '🆗');
-        msg33 = msg32.replace(/✝️♏️/g, '™️');
-        msg34 = msg33.replace('+', '➕');
-        msg35 = msg34.replace(/-/g, '➖');
-        msg36 = msg35.replace(/10/g, '🔟');
-        msg37 = msg36.replace(/0/g, '0️⃣');
-        msg38 = msg37.replace(/1/g, '1️⃣');
-        msg39 = msg38.replace(/2/g, '2️⃣');
-        msg40 = msg39.replace(/3/g, '3️⃣');
-        msg41 = msg40.replace(/4/g, '4️⃣');
-        msg42 = msg41.replace(/5/g, '5️⃣');
-        msg43 = msg42.replace(/6/g, '6️⃣');
-        msg44 = msg43.replace(/7/g, '7️⃣');
-        msg45 = msg44.replace(/8/g, '8️⃣');
-        msg = msg45.replace(/9/g, '9️⃣');
-        return msg
+    emojiconvert: function emojiconvert(text) {
+        //replaces all letters with emojis.
+        set = text.replace(/a/g, '🅰').replace(/b/g, '🅱️').replace(/c/g, '©️').replace(/d/g, '🇩')
+        .replace(/e/g, '🇪').replace(/f/g, '🇫').replace(/g/g, '🇬').replace(/h/g, '♓').replace(/i/g, 'ℹ️')
+        .replace(/j/g, '🇯').replace(/k/g, '🇰').replace(/l/g, '🇱').replace(/m/g, '♏️').replace(/n/g, '🇳')
+        .replace(/o/g, '🅾️').replace(/p/g, '🅿️').replace(/q/g, '🇶').replace(/r/g, '®️').replace(/s/g, '💲')
+        .replace(/t/g, '✝️').replace(/u/g, '🇺').replace(/v/g, '🇻').replace(/w/g, '🇼').replace(/x/g, '❌')
+        .replace(/y/g, '🇾').replace(/z/g, '🇿').replace(/ /g, ' ⬜ ').replace(/!/g, '❗️').replace('?', '❓')
+        .replace(/©️🇱/g, '🆑').replace(/🅰🅱️/g, '🆎').replace(/🅾️🇰/g, '🆗').replace(/✝️♏️/g, '™️')
+        .replace('+', '➕').replace(/-/g, '➖').replace(/10/g, '🔟').replace(/0/g, '0️⃣').replace(/1/g, '1️⃣')
+        .replace(/2/g, '2️⃣').replace(/3/g, '3️⃣').replace(/4/g, '4️⃣').replace(/5/g, '5️⃣').replace(/6/g, '6️⃣')
+        .replace(/7/g, '7️⃣').replace(/8/g, '8️⃣').replace(/9/g, '9️⃣')
+        return set
     },
 
     synonymify: function synonymify(text) {
@@ -476,7 +442,68 @@ module.exports = {
     },
 
     listenerOpt: function lOptExport(set_check, serverID, in_out) {
+        //relay command used in-file
         return lOpt(set_check, serverID, in_out)
+    },
+
+    superScript: function superScript(text) {
+        var math = text.replace(/0/g, '⁰').replace(/1/g, '¹').replace(/2/g, '²').replace(/3/g, '³')
+            .replace(/4/g, '⁴').replace(/5/g, '⁵').replace(/6/g, '⁶').replace(/7/g, '⁷').replace(/8/g, '⁸')
+            .replace(/9/g, '⁹').replace(/\+/g, '⁺').replace(/-/g, '⁻').replace(/=/g, '⁼').replace(/\(/g, '⁽')
+            .replace(/\)/g, '⁾')
+        var enLower = math.replace(/a/g, 'ᵃ').replace(/b/g, 'ᵇ').replace(/c/g, 'ᶜ').replace(/d/g, 'ᵈ')
+            .replace(/e/g, 'ᵉ').replace(/f/g, 'ᶠ').replace(/g/g, 'ᵍ').replace(/h/g, 'ʰ').replace(/i/g, 'ⁱ')
+            .replace(/j/g, 'ʲ').replace(/k/g, 'ᵏ').replace(/l/g, 'ˡ').replace(/m/g, 'ᵐ').replace(/n/g, 'ⁿ')
+            .replace(/o/g, 'ᵒ').replace(/p/g, 'ᵖ').replace(/q/g, 'ᵠ').replace(/r/g, 'ʳ').replace(/s/g, 'ˢ')
+            .replace(/t/g, 'ᵗ').replace(/u/g, 'ᵘ').replace(/v/g, 'ᵛ').replace(/w/g, 'ʷ').replace(/x/g, 'ˣ')
+            .replace(/y/g, 'ʸ').replace(/z/g, 'ᶻ')
+        var enUpper = enLower.replace(/A/g, 'ᴬ').replace(/B/g, 'ᴮ').replace(/C/g, 'ᶜ').replace(/D/g, 'ᴰ')
+            .replace(/E/g, 'ᴱ').replace(/F/g, 'ᶠ').replace(/G/g, 'ᴳ').replace(/H/g, 'ᴴ').replace(/I/g, 'ᴵ')
+            .replace(/J/g, 'ᴶ').replace(/K/g, 'ᴷ').replace(/L/g, 'ᴸ').replace(/M/g, 'ᴹ').replace(/N/g, 'ᴺ')
+            .replace(/O/g, 'ᴼ').replace(/P/g, 'ᴾ').replace(/Q/g, 'ᵠ').replace(/R/g, 'ᴿ').replace(/S/g, 'ˢ')
+            .replace(/T/g, 'ᵀ').replace(/U/g, 'ᵁ').replace(/V/g, 'ⱽ').replace(/W/g, 'ᵂ').replace(/X/g, 'ˣ')
+            .replace(/Y/g, 'ʸ').replace(/Z/g, 'ᶻ')
+        return enUpper
+    },
+
+    unicodify: function unicodify(text) {
+        var num = text.replace(/0/g, '𝟢').replace(/1/g, '𝟣').replace(/2/g, '𝟤').replace(/3/g, '𝟥')
+            .replace(/4/g, '𝟦').replace(/5/g, '𝟧').replace(/6/g, '𝟨').replace(/7/g, '𝟩').replace(/8/g, '𝟪')
+            .replace(/9/g, '𝟫')
+        var enLower = num.replace(/a/g, 'а').replace(/b/g, '𝖻').replace(/c/g, 'с').replace(/d/g, '𝖽')
+            .replace(/e/g, 'е').replace(/f/g, '𝖿').replace(/g/g, '𝗀').replace(/h/g, '𝗁').replace(/i/g, '𝗂')
+            .replace(/j/g, '𝗃').replace(/k/g, '𝗄').replace(/l/g, '❘').replace(/m/g, '𝗆').replace(/n/g, '𝗇')
+            .replace(/o/g, 'о').replace(/p/g, 'р').replace(/q/g, '𝗊').replace(/r/g, '𝗋').replace(/s/g, 'ѕ')
+            .replace(/t/g, '𝗍').replace(/u/g, '𝗎').replace(/v/g, '𝗏').replace(/w/g, '𝗐').replace(/x/g, '𝗑')
+            .replace(/y/g, '𝗒').replace(/z/g, '𝗓')
+        var enUpper = enLower.replace(/A/g, 'А').replace(/B/g, 'В').replace(/C/g, 'С').replace(/D/g, '𝖣')
+            .replace(/E/g, 'Е').replace(/F/g, '𝖥').replace(/G/g, '𝖦').replace(/H/g, '𝖧').replace(/I/g, 'І')
+            .replace(/J/g, '𝖩').replace(/K/g, '𝖪').replace(/L/g, '𝖫').replace(/M/g, '𝖬').replace(/N/g, '𝖭')
+            .replace(/O/g, 'О').replace(/P/g, 'Р').replace(/Q/g, '𝖰').replace(/R/g, '𝖱').replace(/S/g, 'Ѕ')
+            .replace(/T/g, '𝖳').replace(/U/g, '𝖴').replace(/V/g, '𝖵').replace(/W/g, '𝖶').replace(/X/g, '𝖷')
+            .replace(/Y/g, '𝖸').replace(/Z/g, '𝖹')
+        return enUpper
+    },
+
+    bold: function bold(text) {
+        var repArr = [['A', '𝗔'], ['B', '𝗕'], ['C', '𝗖'], ['D', '𝗗'], ['E', '𝗘'], ['F', '𝗙'], ['G', '𝗚'],
+        ['H', '𝗛'], ['I', '𝗜'], ['J', '𝗝'], ['K', '𝗞'], ['L', '𝗟'], ['M', '𝗠'], ['N', '𝗡'], ['O', '𝗢'],
+        ['P', '𝗣'], ['Q', '𝗤'], ['R', '𝗥'], ['S', '𝗦'], ['T', '𝗧'], ['U', '𝗨'], ['V', '𝗩'], ['W', '𝗪'],
+        ['X', '𝗫'], ['Y', '𝗬'], ['Z', '𝗭'], ['a', '𝗮'], ['b', '𝗯'], ['c', '𝗰'], ['d', '𝗱'], ['e', '𝗲'],
+        ['f', '𝗳'], ['g', '𝗴'], ['h', '𝗵'], ['i', '𝗶'], ['j', '𝗷'], ['k', '𝗸'], ['l', '𝗹'], ['m', '𝗺'],
+        ['n', '𝗻'], ['o', '𝗼'], ['p', '𝗽'], ['q', '𝗾'], ['r', '𝗿'], ['s', '𝘀'], ['t', '𝘁'], ['u', '𝘂'],
+        ['v', '𝘃'], ['w', '𝘄'], ['x', '𝘅'], ['y', '𝘆'], ['z', '𝘇'], ['0', '𝟬'], ['1', '𝟭'], ['2', '𝟮'],
+        ['3', '𝟯'], ['4', '𝟰'], ['5', '𝟱'], ['6', '𝟲'], ['7', '𝟳'], ['8', '𝟴'], ['9', '𝟵']]
+        var str = text
+        for (i = 0; i < repArr.length; i++) {
+            str = str.replace(new RegExp(repArr[i][0], 'g'), repArr[i][1])
+        }
+        return str
+    },
+
+    replace: function replace(item, replacement, text) {
+        var str = text.replace(new RegExp(item, 'g'), replacement)
+        return str
     }
 
 }
