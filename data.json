@@ -1,5 +1,7 @@
 {
-  "prefix": {},
+  "prefix": {
+    "default": "txt."
+  },
   "cmds": {},
   "randSpk": {},
   "listener": {}

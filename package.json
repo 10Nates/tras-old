@@ -6,9 +6,9 @@
   "author": "Nathan B",
   "license": "gpl-3.0",
   "dependencies": {
-    "discord.js": "^11.3.2",
+    "discord.js": "^11.4.2",
     "edit-json-file": "^1.1.0",
-    "figlet": "^1.2.0",
+    "figlet": "^1.2.1",
     "moby": "^1.1.2",
     "remove-punctuation": "0.0.4",
     "wink-pos-tagger": "^1.5.0",
