@@ -4,5 +4,8 @@
   },
   "cmds": {},
   "randSpk": {},
-  "listener": {}
+  "listener": {
+    "optOut": {},
+    "relays": {}
+  }
 }
