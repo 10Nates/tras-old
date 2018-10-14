@@ -381,7 +381,7 @@ module.exports = {
                     .setDescription(`_ _\n*To relay a channel, use: ${prefix}listen [channel ID or channel tag|stop|list] [channel ID or channel tag]*`)
                 return embed
             }
-        } else if (Opt == 'run' && jfile.get(`listener.relays`)) {
+        } else if (Opt == 'run') {
             //checks for Guild, disables DMs
             if (message.guild) {
                 //make array
