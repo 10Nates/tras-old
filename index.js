@@ -184,27 +184,29 @@ bot.on('message', (message) => {
         return
     }
 
-    if (command == `${prefix}cmds`) { //make lowercase
+    if (command == `${prefix}cmds`) { 
+        //lowercase args
+        var la = args.join(' ').toLowerCase().split(' ')
         //select command manage
-        if (args[0] == 'manage') {
+        if (la[0] == 'manage') {
             //test for guild
             if (message.guild) {
                 //in server
                 //select sub-command & check for perms
-                if (args[1] == 'set' && args[2] && args[3] && message.guild.member(message.author.id).hasPermission('MANAGE_MESSAGES')) {
+                if (la[1] == 'set' && args[2] && args[3] && message.guild.member(message.author.id).hasPermission('MANAGE_MESSAGES')) {
                     //set or change command
-                    cmd.servCmds('set', message.guild.id, args[2].toLowerCase(), args.slice(3, args.length).join(' '))
-                    message.channel.send(`Set Command "${args[2].toLowerCase()}".`)
-                } else if (args[1] == 'delete' && args[2] && message.guild.member(message.author.id).hasPermission('MANAGE_MESSAGES')) {
+                    cmd.servCmds('set', message.guild.id, la[2], args.slice(3, args.length).join(' '))
+                    message.channel.send(`Set Command "${la[2]}".`)
+                } else if (la[1] == 'delete' && args[2] && message.guild.member(message.author.id).hasPermission('MANAGE_MESSAGES')) {
                     //delete command & choose response
-                    if (cmd.servCmds('set', message.guild.id, args[2].toLowerCase())) {
+                    if (cmd.servCmds('set', message.guild.id, la[2])) {
                         //command there, deleted
-                        msg = `Removed Command "${args[2].toLowerCase()}".`
+                        msg = `Removed Command "${la[2]}".`
                         message.channel.send(msg)
                         cmd.logmsg(msg, message, bot)
                     } else {
                         //command already not there
-                        msg = `Command "${args[2].toLowerCase()}" doesn't exist!`
+                        msg = `Command "${la[2]}" doesn't exist!`
                         message.channel.send(msg)
                         cmd.logmsg(msg, message, bot)
                     }
@@ -217,32 +219,32 @@ bot.on('message', (message) => {
             } else {
                 //in DM
                 //select sub-command
-                if (args[1] == 'set' && args[2] && args[3]) {
+                if (la[1] == 'set' && args[2] && args[3]) {
                     //set or change command
-                    cmd.servCmds('set', message.author.id, args[2].toLowerCase(), args.slice(3, args.length).join(' '))
-                    message.channel.send(`Set Command "${args[2].toLowerCase()}".`)
-                } else if (args[1] == 'delete' && args[2]) {
+                    cmd.servCmds('set', message.author.id, la[2], args.slice(3, args.length).join(' '))
+                    message.channel.send(`Set Command "${la[2]}".`)
+                } else if (la[1] == 'delete' && args[2]) {
                     //delete command & choose response
-                    if (cmd.servCmds('set', message.author.id, args[2].toLowerCase())) {
+                    if (cmd.servCmds('set', message.author.id, la[2])) {
                         //command there, deleted
-                        msg = `Removed Command "${args[2].toLowerCase()}".`
+                        msg = `Removed Command "${la[2]}".`
                         message.channel.send(msg)
                         cmd.logmsg(msg, message, bot)
                     } else {
                         //command already not there
-                        msg = `Command "${args[2].toLowerCase()}" doesn't exist!`
+                        msg = `Command "${la[2]}" doesn't exist!`
                         message.channel.send(msg)
                         cmd.logmsg(msg, message, bot)
                     }
                 } else {
                     //fallback
-                    var msg = `You did not format the command correctly. The correct format is: \n${prefix}cmds [manage|view] [set|delete] [activator] [reply (multiword)]`
+                    var msg = `DM You did not format the command correctly. The correct format is: \n${prefix}cmds [manage|view] [set|delete] [activator] [reply (multiword)]`
                     message.channel.send(msg)
                     cmd.logmsg(msg, message, bot)
                 }
             }
             //select command view
-        } else if (args[0] == 'view') {
+        } else if (la[0] == 'view') {
             //test for guild
             if (message.guild) {
                 //in server
@@ -279,22 +281,24 @@ bot.on('message', (message) => {
         return
     }
 
-    if (command == `${prefix}prefix`) { //make lowercase
+    if (command == `${prefix}prefix`) {
+        //lowercase args
+        var la = args.join(' ').toLowerCase().split(' ')
         //select command
-        if (args[0] == 'get' && args[1]) {
+        if (la[0] == 'get' && args[1]) {
             //grab stored prefix and send
             message.channel.send(`The prefix for the server with ID "${args[1]}" is "${cmd.getPrefix(args[1])}"`)
             cmd.logmsg(`The prefix for the server with ID "${args[1]}" is "${cmd.getPrefix(args[1])}"`, message, bot)
-        } else if (args[0] == 'set' && args[1]) {
+        } else if (la[0] == 'set' && args[1]) {
             //test for guild
             if (message.guild) {
                 //in server
                 //test for perms
                 if (message.guild.member(message.author.id).hasPermission('MANAGE_MESSAGES')) {
                     //set server prefix
-                    cmd.setPrefix(message.guild.id, args[1])
-                    message.channel.send(`Prefix set to: "${args[1]}"`)
-                    cmd.logmsg(`Prefix set to: "${args[1]}"`, message, bot)
+                    cmd.setPrefix(message.guild.id, la[1])
+                    message.channel.send(`Prefix set to: "${la[1]}"`)
+                    cmd.logmsg(`Prefix set to: "${la[1]}"`, message, bot)
                 } else {
                     //fallback
                     message.channel.send(`You don't have the permission: "Manage Messages"`)
@@ -303,9 +307,9 @@ bot.on('message', (message) => {
             } else {
                 //in DM
                 //set DM prefix
-                cmd.setPrefix(message.author.id, args[1])
-                message.channel.send(`Prefix set to: "${args[1]}"`)
-                cmd.logmsg(`Prefix set to: "${args[1]}"`, message, bot)
+                cmd.setPrefix(message.author.id, la[1])
+                message.channel.send(`Prefix set to: "${la[1]}"`)
+                cmd.logmsg(`Prefix set to: "${la[1]}"`, message, bot)
             }
         } else {
             //fallback

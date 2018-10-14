@@ -2,7 +2,11 @@
   "prefix": {
     "default": "txt."
   },
-  "cmds": {},
+  "cmds": {
+    "186507006008360960": {
+      "up": "doGGGGGGG 3"
+    }
+  },
   "randSpk": {},
   "listener": {
     "optOut": {},
