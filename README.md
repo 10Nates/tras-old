@@ -1,18 +1,19 @@
 # TRAS
 # Text-Based Response Automation System
-# Made by Nathan B @ https://nate.illegaldomain.com
+__Made by Nathan B @ https://nate.illegaldomain.com__
 
 A Discord bot for text-based commands and responses.
 
 This may sound like any other bot at first, but this is **much** more than basic text.
 
-----------------------------------
+![](https://tras.illegaldomain.com/img/traslogo.png)
 
-LIST OF COMMANDS
+----------------------------------
+__LIST OF COMMANDS__
 *Using default server prefix*
 ---
 >__txt.help__
-Summons this help list.
+Summons a help list.
  
 >__txt.about__
 Gives information about the bot.
@@ -31,7 +32,7 @@ Turn all characters into emojis.
 *Format: txt.emojify [text]*
  
 >__txt.ebojify__
-Turn certain characters into :b:.
+Turn certain characters into 🅱️.
 *Format: txt.ebojify [text]*
  
 >__txt.superscript__
@@ -64,7 +65,7 @@ Generate ascii art. Over 15 characters responds with a file.
  
 >__txt.cmds__
 View and manage custom server commands, managing requires "Manage Messages" perms.
-*Format: txt.cmds [manage|view] [set|delete] [activator] [reply (multiword)]*
+*Format: txt.cmds [manage|view] [set|delete] [trigger] [reply]*
  
 >__txt.prefix__
 Get prefix for any server or set the current server's prefix, setting prefix requires "Manage Messages" perms.
@@ -86,11 +87,11 @@ Sends file with all possible combinations of the units you have selected and giv
 Relays text channels into your DMs. Only allows listening to channels everyone can see. Servers are able to individually opt out. Opted in by default.
 *Format: txt.listen [channel ID or channel tag|stop|list|opt] [channel ID or channel tag|set|check] [serverID|in or out]*
  
->__Mention me__
-I respond "What's 🅱️oppin'"
+>__Mention bot__
+It responds "What's 🅱️oppin'"
  
->__Mention me with message "PREFIX"__
-I respond with the server's prefix and the help command.
+>__Mention bot with message "PREFIX"__
+It responds with the server's prefix and the help command.
  
 >__Generated messages__
 Fully generated messages (not an AI so they're terrible and don't make sense) that can be toggled to randomly say them in response to other messages. Random messages will not reply to commands.
@@ -99,14 +100,20 @@ Fully generated messages (not an AI so they're terrible and don't make sense) th
 
 GENERAL DETAILS
 ---
->All data is stored in JSON, despite what some have to say about it.
+>All data is stored in JSON, despite what some have to say about it. 
+
 >Large items are stored in files.
+
 >Many fallbacks to help you format the command are in place.
+
 >All in-any-way controversial features are toggleable.
+
 >Custom commands are activated like normal commands. | *Ex: txt.[trigger] w/ default prefix*
+
 >ALL commands (except for some modifiers) work with aNY CapItaLIzATIoN.
->"@bot PREFIX" works with aNy cApITalIzaTiOn.
->All commands work in DMs. (Except for some exeptions due to Discord's limits.)
+
+>All commands work in DMs. (There are some exeptions due to Discord's limits.)
+
 >This bot has 8 different dependencies.
 
 ----------------------------------
