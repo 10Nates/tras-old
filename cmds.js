@@ -196,7 +196,7 @@ module.exports = {
             //Under 15 chars
             console.log(`Font Given: ${setFont}`)
             //create asciiArt & return
-            return '```asciidoc\n' + (figlet.textSync(text, {
+            return '```\n' + (figlet.textSync(text, {
                 font: setFont,
                 horizontalLayout: 'default',
                 verticalLayout: 'default'
