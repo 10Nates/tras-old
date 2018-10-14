@@ -13,7 +13,7 @@ const bigF = 'F F F F F F F\nF F \nF F F F F F F\nF F\nF F'
 
 console.log('Starting bot...')
 bot.on('ready', () => {
-    console.log('Bot Started! ' + `Current time: ${Date().split(' ').slice(1, 5).join(' ')} ${Date().split(' ').slice(6, 7).join(' ')}`)
+    console.log('Bot Started! ' + `Current time: ${Date().split(' ').slice(1, 5).join(' ')} ${Date().split(' ').slice(6, Date().split(' ').length).join(' ')}`)
     console.log('--------------------')
     bot.user.setActivity('@me PREFIX')
 })

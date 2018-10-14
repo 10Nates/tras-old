@@ -82,7 +82,7 @@ module.exports = {
         bot.channels.get('449759068941189151').send(`recieved: ${message.author.username} - ${message.content}`);
         bot.channels.get('449759068941189151').send(`Sent: ${msg}`);
         console.log(message.author.username + ' - ' + message.content);
-        console.log(`sent @ ${Date().split(' ').slice(1, 5).join(' ')} ${Date().split(' ').slice(6, 7).join(' ')}: ${msg}`);
+        console.log(`sent @ ${Date().split(' ').slice(1, 5).join(' ')}: ${msg}`);
     },
 
     runHive: function runHive(message, bot) {
@@ -381,7 +381,7 @@ module.exports = {
                     .setDescription(`_ _\n*To relay a channel, use: ${prefix}listen [channel ID or channel tag|stop|list] [channel ID or channel tag]*`)
                 return embed
             }
-        } else if (Opt == 'run') {
+        } else if (Opt == 'run' && jfile.get(`listener.relays`)) {
             //checks for Guild, disables DMs
             if (message.guild) {
                 //make array
