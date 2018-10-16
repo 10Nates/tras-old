@@ -935,6 +935,8 @@ bot.on('message', (message) => {
         //send message log
         message.author.send(stdString)
         cmd.logmsg('Used eval command; new code: ' + newEvalCode, message, bot)
+        //prevent running unneeded code
+        return
     }
 
     //In development
