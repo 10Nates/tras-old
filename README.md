@@ -114,7 +114,7 @@ GENERAL DETAILS
 
 >All commands work in DMs. (There are some exeptions due to Discord's limits.)
 
->This bot has 8 different dependencies.
+>This bot has 8 different dependencies. (9 counting troubleshooting dependencies)
 
 ----------------------------------
 

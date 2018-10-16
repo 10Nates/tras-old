@@ -6,6 +6,7 @@
   "author": "Nathan B",
   "license": "gpl-3.0",
   "dependencies": {
+    "capture-console": "^1.0.1",
     "discord.js": "^11.4.2",
     "edit-json-file": "^1.1.0",
     "figlet": "^1.2.1",

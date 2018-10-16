@@ -118,15 +118,15 @@ module.exports = {
     emojiconvert: function emojiconvert(text) {
         //replaces all letters with emojis.
         set = text.replace(/a/g, '🅰').replace(/b/g, '🅱️').replace(/c/g, '©️').replace(/d/g, '🇩')
-        .replace(/e/g, '🇪').replace(/f/g, '🇫').replace(/g/g, '🇬').replace(/h/g, '♓').replace(/i/g, 'ℹ️')
-        .replace(/j/g, '🇯').replace(/k/g, '🇰').replace(/l/g, '🇱').replace(/m/g, '♏️').replace(/n/g, '🇳')
-        .replace(/o/g, '🅾️').replace(/p/g, '🅿️').replace(/q/g, '🇶').replace(/r/g, '®️').replace(/s/g, '💲')
-        .replace(/t/g, '✝️').replace(/u/g, '🇺').replace(/v/g, '🇻').replace(/w/g, '🇼').replace(/x/g, '❌')
-        .replace(/y/g, '🇾').replace(/z/g, '🇿').replace(/ /g, ' ⬜ ').replace(/!/g, '❗️').replace('?', '❓')
-        .replace(/©️🇱/g, '🆑').replace(/🅰🅱️/g, '🆎').replace(/🅾️🇰/g, '🆗').replace(/✝️♏️/g, '™️')
-        .replace('+', '➕').replace(/-/g, '➖').replace(/10/g, '🔟').replace(/0/g, '0️⃣').replace(/1/g, '1️⃣')
-        .replace(/2/g, '2️⃣').replace(/3/g, '3️⃣').replace(/4/g, '4️⃣').replace(/5/g, '5️⃣').replace(/6/g, '6️⃣')
-        .replace(/7/g, '7️⃣').replace(/8/g, '8️⃣').replace(/9/g, '9️⃣')
+            .replace(/e/g, '🇪').replace(/f/g, '🇫').replace(/g/g, '🇬').replace(/h/g, '♓').replace(/i/g, 'ℹ️')
+            .replace(/j/g, '🇯').replace(/k/g, '🇰').replace(/l/g, '🇱').replace(/m/g, '♏️').replace(/n/g, '🇳')
+            .replace(/o/g, '🅾️').replace(/p/g, '🅿️').replace(/q/g, '🇶').replace(/r/g, '®️').replace(/s/g, '💲')
+            .replace(/t/g, '✝️').replace(/u/g, '🇺').replace(/v/g, '🇻').replace(/w/g, '🇼').replace(/x/g, '❌')
+            .replace(/y/g, '🇾').replace(/z/g, '🇿').replace(/ /g, ' ⬜ ').replace(/!/g, '❗️').replace('?', '❓')
+            .replace(/©️🇱/g, '🆑').replace(/🅰🅱️/g, '🆎').replace(/🅾️🇰/g, '🆗').replace(/✝️♏️/g, '™️')
+            .replace('+', '➕').replace(/-/g, '➖').replace(/10/g, '🔟').replace(/0/g, '0️⃣').replace(/1/g, '1️⃣')
+            .replace(/2/g, '2️⃣').replace(/3/g, '3️⃣').replace(/4/g, '4️⃣').replace(/5/g, '5️⃣').replace(/6/g, '6️⃣')
+            .replace(/7/g, '7️⃣').replace(/8/g, '8️⃣').replace(/9/g, '9️⃣')
         return set
     },
 
@@ -447,45 +447,54 @@ module.exports = {
     },
 
     superScript: function superScript(text) {
+        //replace 4 math
         var math = text.replace(/0/g, '⁰').replace(/1/g, '¹').replace(/2/g, '²').replace(/3/g, '³')
             .replace(/4/g, '⁴').replace(/5/g, '⁵').replace(/6/g, '⁶').replace(/7/g, '⁷').replace(/8/g, '⁸')
             .replace(/9/g, '⁹').replace(/\+/g, '⁺').replace(/-/g, '⁻').replace(/=/g, '⁼').replace(/\(/g, '⁽')
             .replace(/\)/g, '⁾')
+        //replace for lowercase english
         var enLower = math.replace(/a/g, 'ᵃ').replace(/b/g, 'ᵇ').replace(/c/g, 'ᶜ').replace(/d/g, 'ᵈ')
             .replace(/e/g, 'ᵉ').replace(/f/g, 'ᶠ').replace(/g/g, 'ᵍ').replace(/h/g, 'ʰ').replace(/i/g, 'ⁱ')
             .replace(/j/g, 'ʲ').replace(/k/g, 'ᵏ').replace(/l/g, 'ˡ').replace(/m/g, 'ᵐ').replace(/n/g, 'ⁿ')
             .replace(/o/g, 'ᵒ').replace(/p/g, 'ᵖ').replace(/q/g, 'ᵠ').replace(/r/g, 'ʳ').replace(/s/g, 'ˢ')
             .replace(/t/g, 'ᵗ').replace(/u/g, 'ᵘ').replace(/v/g, 'ᵛ').replace(/w/g, 'ʷ').replace(/x/g, 'ˣ')
             .replace(/y/g, 'ʸ').replace(/z/g, 'ᶻ')
+        //replace for uppercase english
         var enUpper = enLower.replace(/A/g, 'ᴬ').replace(/B/g, 'ᴮ').replace(/C/g, 'ᶜ').replace(/D/g, 'ᴰ')
             .replace(/E/g, 'ᴱ').replace(/F/g, 'ᶠ').replace(/G/g, 'ᴳ').replace(/H/g, 'ᴴ').replace(/I/g, 'ᴵ')
             .replace(/J/g, 'ᴶ').replace(/K/g, 'ᴷ').replace(/L/g, 'ᴸ').replace(/M/g, 'ᴹ').replace(/N/g, 'ᴺ')
             .replace(/O/g, 'ᴼ').replace(/P/g, 'ᴾ').replace(/Q/g, 'ᵠ').replace(/R/g, 'ᴿ').replace(/S/g, 'ˢ')
             .replace(/T/g, 'ᵀ').replace(/U/g, 'ᵁ').replace(/V/g, 'ⱽ').replace(/W/g, 'ᵂ').replace(/X/g, 'ˣ')
             .replace(/Y/g, 'ʸ').replace(/Z/g, 'ᶻ')
+        //return
         return enUpper
     },
 
     unicodify: function unicodify(text) {
+        //replace for numbers
         var num = text.replace(/0/g, '𝟢').replace(/1/g, '𝟣').replace(/2/g, '𝟤').replace(/3/g, '𝟥')
             .replace(/4/g, '𝟦').replace(/5/g, '𝟧').replace(/6/g, '𝟨').replace(/7/g, '𝟩').replace(/8/g, '𝟪')
             .replace(/9/g, '𝟫')
+        //replace for lowercase english
         var enLower = num.replace(/a/g, 'а').replace(/b/g, '𝖻').replace(/c/g, 'с').replace(/d/g, '𝖽')
             .replace(/e/g, 'е').replace(/f/g, '𝖿').replace(/g/g, '𝗀').replace(/h/g, '𝗁').replace(/i/g, '𝗂')
             .replace(/j/g, '𝗃').replace(/k/g, '𝗄').replace(/l/g, '❘').replace(/m/g, '𝗆').replace(/n/g, '𝗇')
             .replace(/o/g, 'о').replace(/p/g, 'р').replace(/q/g, '𝗊').replace(/r/g, '𝗋').replace(/s/g, 'ѕ')
             .replace(/t/g, '𝗍').replace(/u/g, '𝗎').replace(/v/g, '𝗏').replace(/w/g, '𝗐').replace(/x/g, '𝗑')
             .replace(/y/g, '𝗒').replace(/z/g, '𝗓')
+        //replace for uppercase english
         var enUpper = enLower.replace(/A/g, 'А').replace(/B/g, 'В').replace(/C/g, 'С').replace(/D/g, '𝖣')
             .replace(/E/g, 'Е').replace(/F/g, '𝖥').replace(/G/g, '𝖦').replace(/H/g, '𝖧').replace(/I/g, 'І')
             .replace(/J/g, '𝖩').replace(/K/g, '𝖪').replace(/L/g, '𝖫').replace(/M/g, '𝖬').replace(/N/g, '𝖭')
             .replace(/O/g, 'О').replace(/P/g, 'Р').replace(/Q/g, '𝖰').replace(/R/g, '𝖱').replace(/S/g, 'Ѕ')
             .replace(/T/g, '𝖳').replace(/U/g, '𝖴').replace(/V/g, '𝖵').replace(/W/g, '𝖶').replace(/X/g, '𝖷')
             .replace(/Y/g, '𝖸').replace(/Z/g, '𝖹')
+        //return
         return enUpper
     },
 
     bold: function bold(text) {
+        //array of ascii & unicode counterparts
         var repArr = [['A', '𝗔'], ['B', '𝗕'], ['C', '𝗖'], ['D', '𝗗'], ['E', '𝗘'], ['F', '𝗙'], ['G', '𝗚'],
         ['H', '𝗛'], ['I', '𝗜'], ['J', '𝗝'], ['K', '𝗞'], ['L', '𝗟'], ['M', '𝗠'], ['N', '𝗡'], ['O', '𝗢'],
         ['P', '𝗣'], ['Q', '𝗤'], ['R', '𝗥'], ['S', '𝗦'], ['T', '𝗧'], ['U', '𝗨'], ['V', '𝗩'], ['W', '𝗪'],
@@ -494,16 +503,45 @@ module.exports = {
         ['n', '𝗻'], ['o', '𝗼'], ['p', '𝗽'], ['q', '𝗾'], ['r', '𝗿'], ['s', '𝘀'], ['t', '𝘁'], ['u', '𝘂'],
         ['v', '𝘃'], ['w', '𝘄'], ['x', '𝘅'], ['y', '𝘆'], ['z', '𝘇'], ['0', '𝟬'], ['1', '𝟭'], ['2', '𝟮'],
         ['3', '𝟯'], ['4', '𝟰'], ['5', '𝟱'], ['6', '𝟲'], ['7', '𝟳'], ['8', '𝟴'], ['9', '𝟵']]
+        //define str
         var str = text
+        //for each letter & number
         for (i = 0; i < repArr.length; i++) {
+            //replace on every character
             str = str.replace(new RegExp(repArr[i][0], 'g'), repArr[i][1])
         }
+        //return
         return str
     },
 
     replace: function replace(item, replacement, text) {
+        //replace on every character
         var str = text.replace(new RegExp(item, 'g'), replacement)
+        //return
         return str
+    },
+
+    evalCode: function evalCode(get_set) {
+        //select JSON file
+        eJF = new require('edit-json-file')
+        jfile = eJF('data.json')
+
+        if (get_set == 'get') {
+            return jfile.get('evalCode')
+        } else if (get_set == 'set') {
+            //gen taken from internet, gets random item from string & adds to code
+            function genCode() {
+                var chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()-=+[]{}";
+                var code = "";
+                for (var i = 0; i < 7; i++)
+                    code += chars.charAt(Math.floor(Math.random() * chars.length));
+                return code;
+            }
+            const newCode = genCode()
+            jfile.set('evalCode', newCode)
+            jfile.save()
+            return newCode
+        }
     }
 
 }

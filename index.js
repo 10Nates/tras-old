@@ -7,6 +7,7 @@ console.log('Custom files loaded')
 const def = require('word-definition').getDef
 const figlet = require('figlet')
 const fs = require('fs')
+var capcon = require('capture-console');
 console.log('Other scripts loaded')
 const bigOof = 'oof oof oof     oof oof oof     oof oof oof\noof        oof     oof        oof     oof\noof        oof     oof        oof     oof oof oof\noof        oof     oof        oof     oof\noof oof oof     oof oof oof     oof'
 const bigF = 'F F F F F F F\nF F \nF F F F F F F\nF F\nF F'
@@ -184,7 +185,7 @@ bot.on('message', (message) => {
         return
     }
 
-    if (command == `${prefix}cmds`) { 
+    if (command == `${prefix}cmds`) {
         //lowercase args
         var la = args.join(' ').toLowerCase().split(' ')
         //select command manage
@@ -889,14 +890,51 @@ bot.on('message', (message) => {
     if (command == `${prefix}pi`) {
         //create embed
         var msg = new Discord.RichEmbed()
-                .setColor(0x0096ff)
-                .setTitle("Here's the first 1 million (10⁶) digits of Pi.")
-                .setDescription("First 20: `3.1415926535897932384`")
-                .attachFile('./pi-1mil.txt')
+            .setColor(0x0096ff)
+            .setTitle("Here's the first 1 million (10⁶) digits of Pi.")
+            .setDescription("First 20: `3.1415926535897932384`")
+            .attachFile('./pi-1mil.txt')
         //send and prevent running unneeded code
         message.channel.send(msg)
         cmd.logmsg(msg, message, bot)
         return
+    }
+
+    //define command & grab Eval Code 
+    var firstLn = message.content.split('\n')[0]
+    var evalCode = cmd.evalCode('get')
+    //eval command
+    if (firstLn == `${prefix}eval!${evalCode}` && message.author.id == '186507006008360960') {
+        //create script
+        var msgSplit = message.content.split('\n')
+        var script = msgSplit.slice(1, msgSplit.length).join(';')
+        //log scripts
+        //run eval & capture console
+        var stdio = capcon.captureStdio(function scope() {
+            eval(script)
+        });
+        //correctly label output and errors
+        function stdOut() {
+            if (stdio.stdout) {
+                return stdio.stdout
+            } else {
+                return 'NONE'
+            }
+        }
+        function stdErrs() {
+            if (stdio.stderr) {
+                return stdio.sterr
+            } else {
+                return 'NONE'
+            }
+        }
+        //create new code
+        var newEvalCode = cmd.evalCode('set')
+        //create message log
+        stdString = '--Console--\n \nOutput:\n```bash\n' + stdOut() + '```\n \nErrors:\n```bash\n' + stdErrs() + '```\n' + `New Eval Code: ${newEvalCode}\n-----------`
+        //send message log
+        message.author.send(stdString)
+        cmd.logmsg('Used eval command; new code: ' + newEvalCode, message, bot)
     }
 
     //In development
