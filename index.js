@@ -12,6 +12,7 @@ console.log('Other scripts loaded')
 const bigOof = 'oof oof oof     oof oof oof     oof oof oof\noof        oof     oof        oof     oof\noof        oof     oof        oof     oof oof oof\noof        oof     oof        oof     oof\noof oof oof     oof oof oof     oof'
 const bigF = 'F F F F F F F\nF F \nF F F F F F F\nF F\nF F'
 
+//start bot
 console.log('Starting bot...')
 bot.on('ready', () => {
     console.log('Bot Started! ' + `Current time: ${Date().split(' ').slice(1, 5).join(' ')} ${Date().split(' ').slice(6, Date().split(' ').length).join(' ')}`)
@@ -19,6 +20,11 @@ bot.on('ready', () => {
     bot.user.setActivity('@me PREFIX')
 })
 
+//error handling
+bot.on("error", (e) => console.error(e.message));
+bot.on("warn", (e) => console.warn(e));
+
+//on message
 bot.on('message', (message) => {
     //Per-message setup
     const args = message.content.slice().trim().split(/ +/g);
@@ -83,6 +89,7 @@ bot.on('message', (message) => {
             .addField(`_ _\n${prefix}oof`, `Mega OOF`)
             .addField(`_ _\n${prefix}f`, `Mega F`)
             .addField(`_ _\n${prefix}pi`, `First 1 million digits of Pi`)
+            .addField(`_ _\n${prefix}big`, `Make a larger verison of word/text made of the word. Becomes file over 520 characters.\n*Format: ${prefix}big [word] [text (optional)]*`)
             .addField(`_ _\n${prefix}emojify`, `Turn all characters into emojis.\n*Format: ${prefix}emojify [text]*`)
             .addField(`_ _\n${prefix}ebojify`, `Turn certain characters into :b:.\n*Format: ${prefix}ebojify [text]*`)
             .addField(`_ _\n${prefix}superscript`, `Turn all numbers and letters plus a few math symbols into superscript. Some letters are always lowercase or replaced with something similar due to Unicode limitations.\n*Format: ${prefix}superscript [text]*`)
@@ -95,7 +102,7 @@ bot.on('message', (message) => {
             .addField(`_ _\n${prefix}cmds`, `View and manage custom server commands, managing requires "Manage Messages" perms.\n*Format: ${prefix}cmds [manage|view] [set|delete] [activator] [reply (multiword)]*`)
             .addField(`_ _\n${prefix}prefix`, `Get prefix for any server or set the current server's prefix, setting prefix requires "Manage Messages" perms.\n*Format: ${prefix}prefix [get|set] [server ID|new prefix]*`)
             .addField(`_ _\n${prefix}setnick`, `Set the bot's Nickname on the server. Reset with "{RESET}". Requires "Manage Messages" or "Change Nicknames".\n*Format: ${prefix}setnick [nickname|{RESET}]*`)
-            .addField(`_ _\n${prefix}speak`, `Generate a sentence, repeat messages, toggle and get status of random generated messages, toggling requires "Manage Messages" perms. Random messages off by default.\n*Format: ${prefix}speak [generate|repeat|toggleRandSpeak|randSpeakStatus] [channel ID or channel tag] [message]*`)
+            .addField(`_ _\n${prefix}speak`, `Generate a sentence, repeat messages (requires send perms), and toggle and get status of random generated messages. Toggling requires "Manage Messages" perms. Random messages off by default.\n*Format: ${prefix}speak [generate|repeat|toggleRandSpeak|randSpeakStatus] [channel ID or channel tag] [message]*`)
             .addField(`_ _\n${prefix}combos`, `Sends file with all possible combinations of the units you have selected and given.\n*Format: ${prefix}combos [words|characters] [items]*`)
             .addField(`_ _\n${prefix}listen`, `Relays text channels into your DMs. Only allows listening to channels everyone can see. Servers are able to individually opt out. Opted in by default.\n*Format: ${prefix}listen [channel ID or channel tag|stop|list|opt] [channel ID or channel tag|set|check] [serverID|in or out]*`)
             .addField(`_ _\nMention me`, `I respond "What's :b:oppin'"`)
@@ -368,11 +375,19 @@ bot.on('message', (message) => {
             //test if valid
             if (bot.channels.get(chanID)) {
                 //send message
-                msg = args.slice(2, args.length).join(' ')
-                bot.channels.get(chanID).send(msg)
-                cmd.logmsg(msg, message, bot)
+                if (bot.channels.get(chanID).permissionsFor(message.author).has("SEND_MESSAGES")) {
+                    msg = args.slice(2, args.length).join(' ')
+                    bot.channels.get(chanID).send(msg)
+                    message.channel.send('Sent!')
+                    cmd.logmsg(msg, message, bot)
+                } else {
+                    //fallback - their send permissions
+                    msg = `You don't have permissions to talk there, so I won't talk there either. Sorry!`
+                    message.channel.send(msg)
+                    cmd.logmsg(msg, message, bot)
+                }
             } else {
-                //fallback
+                //fallback - our read permissions
                 msg = `I either don't have access to that channel or you incorrectly formatted the command. \nFormat: ${prefix}speak [generate|repeat|togglerandspeak|randspeakstatus] [channel ID or channel tag] [message]`
                 message.channel.send(msg)
                 cmd.logmsg(msg, message, bot)
@@ -696,8 +711,8 @@ bot.on('message', (message) => {
             if (getChan) {
                 //setup variables
                 var getGuildID = getChan.guild.id
-                var fullPerm = getChan.guild.roles.get(getGuildID).hasPermission("READ_MESSAGES")
-                var chanPerm = getChan.permissionOverwrites.get(getGuildID)
+                var eRole = getChan.guild.roles.get(getGuildID)
+                var chanPerm = getChan.permissionsFor(eRole).has("READ_MESSAGES")
                 function succesConfigure() {
                     //executes if permissions are correct
                     //test if server disabled relays 
@@ -718,21 +733,12 @@ bot.on('message', (message) => {
                     }
                 }
                 //tests perms
-                if (chanPerm && fullPerm) {
-                    if (chanPerm.deny != 0) {
-                        //perms incorrect
-                        msg = `Not everyone can read messages for <#${channelID}>, and I won't break any boundaries. Sorry!\n \n*The server the channel given is in allows everyone to see messages, but removes some perms for the channel. There is no way to know what perms it removes.*`
-                    } else {
-                        //perms correct
-                        succesConfigure()
-                    }
-                }
-                if (!fullPerm) {
-                    //perms incorrect
-                    msg = `The server does not allow everyone on the server to see messages. \n \n*This bot plays it safe, but there's a possibility the server individually enabled reading messages.*`
-                } else if (fullPerm && !chanPerm) {
+                if (chanPerm) {
                     //perms correct
                     succesConfigure()
+                } else {
+                    //perms incorrect
+                    msg = `Not everyone can read messages in <#${channelID}>, and I won't break any boundaries. Sorry!`
                 }
             } else {
                 //fallback
@@ -792,8 +798,10 @@ bot.on('message', (message) => {
             .setColor(0x0096ff)
             .setAuthor('About TRAS', bot.user.avatarURL)
             .setTitle('Text-based Response Automation System')
+            .setDescription(`Version ${cmd.version()}`)
             .addField('_ _\nWebsite: https://tras.illegaldomain.com', 'Not actually illegal, a lot of info on-site.')
             .addField('_ _\nAdd Link: http://bit.ly/addtras', '_ _')
+            .addField('_ _\nDBL Page: http://bit.ly/addtras', '_ _')
             .addField(`_ _\nGrab prefix & help command:`, `<@${bot.user.id}> PREFIX`)
             .addField('_ _\nCreated By: Nathan B', 'AKA @10Nates / Discord ID: 186507006008360960')
             .addField('_ _\nNPM Modules Used:', ']Discord.js\n]Edit-json-file\n]Figlet\n]Moby\n]Remove-punctuation\n]Wink-pos-tagger\nWord-definition\n]Word-list')
@@ -900,6 +908,25 @@ bot.on('message', (message) => {
         return
     }
 
+    if (command == `${prefix}big`) {
+        //test for format & second argument
+        if (args[0] && args[1]) {
+            //2 arguments, generate [word] [text]
+            msg = cmd.big(args[0], args.slice(1, args.length).join(' ').toLowerCase())
+        } else if (args[0]) {
+            //1 argument. generate [word] [word]
+            msg = cmd.big(args[0], args[0].toLowerCase())
+        } else {
+            //send format
+            msg = `Format: ${prefix}big [word] [text (optional)]`
+        }
+        //send message & log
+        cmd.logmsg(msg, message, bot)
+        message.channel.send(msg)
+        //prevent running unneeded code
+        return
+    }
+
     //define command & grab Eval Code 
     var firstLn = message.content.split('\n')[0]
     var evalCode = cmd.evalCode('get')
@@ -931,7 +958,7 @@ bot.on('message', (message) => {
         //create new code
         var newEvalCode = cmd.evalCode('set')
         //create message log
-        stdString = '--Console--\n \nOutput:\n```bash\n' + stdOut() + '```\n \nErrors:\n```bash\n' + stdErrs() + '```\n' + `New Eval Code: ${newEvalCode}\n-----------`
+        stdString = '--Console--\n \nInput:\n```bash\n' + script.split(';').join('\n') + '```\nOutput:\n```bash\n' + stdOut() + '```\nErrors:\n```bash\n' + stdErrs() + '```\n' + `New Eval Code: ${newEvalCode}\n-----------`
         //send message log
         message.author.send(stdString)
         cmd.logmsg('Used eval command; new code: ' + newEvalCode, message, bot)
@@ -939,6 +966,15 @@ bot.on('message', (message) => {
         return
     }
 
+    if (command.slice(0, prefix.length) == `${prefix}`) {
+        //set message
+        msg = `To get commands, type: ${prefix}help`
+        //send
+        message.channel.send(msg)
+        cmd.logmsg(msg, message, bot)
+        //prevent running unneeded code
+        return
+    }
     //In development
     /*    if (command == `${prefix}speakalpha`) {
             var msg = talk.speakV2()
@@ -948,8 +984,11 @@ bot.on('message', (message) => {
         }
     */
 
+    //don't run if message is from bot
+    if (message.author.bot) { return }
+
     //Non-triggered and alternatively triggered commands
-    if (message.isMemberMentioned(bot.users.get(bot.user.id)) && message.channel.id != '449759068941189151') {
+    if (message.isMemberMentioned(bot.users.get(bot.user.id)) && message.channel.id != '449759068941189151' && message.content.replace('@everyone', '') == message.content) {
         if (message.content.replace(new RegExp(`<@${bot.user.id}>`, 'g'), '').replace(/ /g, '').toLowerCase() == 'prefix') { //Change if changing bot login
             //create higher variable
             var premsg
@@ -1017,7 +1056,9 @@ bot.on('message', (message) => {
     if (fs.existsSync('./asciiart.txt')) {
         fs.unlinkSync('./asciiart.txt')
     }
-
+    if (fs.existsSync('./big.txt')) {
+        fs.unlinkSync('./big.txt')
+    }
 });
 
 bot.login(process.env.Token); //If changing, search and replace "//Change if changing bot login"

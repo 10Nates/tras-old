@@ -542,6 +542,77 @@ module.exports = {
             jfile.save()
             return newCode
         }
+    },
+
+    big: function big(word, text) {
+        //select JSON file
+        eJF = new require('edit-json-file')
+        jfile = eJF('bigtype.json')
+
+        //set variables 
+        var ltrs = text.split('')
+        var fltrs = ltrs
+        //filer text to remove unreplaceable items
+        for (i = 0; i < ltrs.length; i++) {
+            //test for unsupported object & replace with identifier
+            if (!jfile.get(ltrs[i]) && ltrs[i] != ' ' && ltrs[i] != '.') {
+                fltrs[i] = '⛝'
+            } else if (ltrs[i] == '.') {
+                //replace period with json-usable replacement
+                fltrs[i] = '․'
+            }
+        }
+        //set vars
+        var inchar = ' '.repeat(word.length)
+        var space = ' '.repeat((word.length * 2))
+        var midchar = ''
+        var r1 = ''
+        var r2 = ''
+        var r3 = ''
+        var r4 = ''
+        var r5 = ''
+        //construct 5 layers, combining to form text
+        for (i = 0; i < fltrs.length; i++) {
+            if (i == 1) {
+                midchar = ' '.repeat(word.length + 1)
+            }
+            if (fltrs[i] != ' ') {
+                r1 = r1 + midchar + jfile.get(`${fltrs[i]}.1`).replace(/_/g, inchar).replace(/c/g, word)
+                r2 = r2 + midchar + jfile.get(`${fltrs[i]}.2`).replace(/_/g, inchar).replace(/c/g, word)
+                r3 = r3 + midchar + jfile.get(`${fltrs[i]}.3`).replace(/_/g, inchar).replace(/c/g, word)
+                r4 = r4 + midchar + jfile.get(`${fltrs[i]}.4`).replace(/_/g, inchar).replace(/c/g, word)
+                r5 = r5 + midchar + jfile.get(`${fltrs[i]}.5`).replace(/_/g, inchar).replace(/c/g, word)
+            } else {
+                r1 = r1 + space
+                r2 = r2 + space
+                r3 = r3 + space
+                r4 = r4 + space
+                r5 = r5 + space
+            }
+        }
+
+        //connect all 5 layers & return
+        var string = `${r1}\n${r2}\n${r3}\n${r4}\n${r5}`
+        fs.writeFileSync('./big.txt', string)
+
+        if (string.length > 520) {
+            var embed = new Discord.RichEmbed()
+            .setColor(0x0096ff)
+            .setTitle('The result is over 520 characters, so I made it a file.')
+            .attachFile('./big.txt')
+
+            return embed
+        } else {
+            return '```\n' + string + '\n```'
+        }
+    },
+
+    version: function version() {
+        //set json file
+        eJF = new require('edit-json-file')
+        jfile = eJF('package.json')
+        //return verison
+        return jfile.get('version')
     }
 
 }

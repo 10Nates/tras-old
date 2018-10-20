@@ -1,6 +1,8 @@
 # TRAS
 # Text-Based Response Automation System
+# Version 2.0.5
 __Made by Nathan B @ https://nate.illegaldomain.com__
+----------------------------------
 
 A Discord bot for text-based commands and responses.
 
@@ -26,6 +28,10 @@ Mega F
  
 >__txt.pi__
 First 1 million digits of Pi
+
+>__txt.big__
+Make a larger verison of word/text made of the word.
+*Format: ${prefix}big [word] [text (optional)]*
  
 >__txt.emojify__
 Turn all characters into emojis.
