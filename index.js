@@ -815,6 +815,8 @@ bot.on('message', (message) => {
         message.channel.send(`I sent you info in your DMs.`)
         //log
         cmd.logmsg('Sent Embed of Info', message, bot)
+        //prevent running unneeded code
+        return
     }
 
     if (command == `${prefix}superscript`) {
