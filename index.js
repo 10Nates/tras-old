@@ -801,7 +801,7 @@ bot.on('message', (message) => {
             .setDescription(`Version ${cmd.version()}`)
             .addField('_ _\nWebsite: https://tras.illegaldomain.com', 'Not actually illegal, a lot of info on-site.')
             .addField('_ _\nAdd Link: http://bit.ly/addtras', '_ _')
-            .addField('_ _\nDBL Page: http://bit.ly/addtras', '_ _')
+            .addField('_ _\nDBL Page: https://discordbots.org/bot/494273862427738113', '_ _')
             .addField(`_ _\nGrab prefix & help command:`, `<@${bot.user.id}> PREFIX`)
             .addField('_ _\nCreated By: Nathan B', 'AKA @10Nates / Discord ID: 186507006008360960')
             .addField('_ _\nNPM Modules Used:', ']Discord.js\n]Edit-json-file\n]Figlet\n]Moby\n]Remove-punctuation\n]Wink-pos-tagger\nWord-definition\n]Word-list')
