@@ -597,9 +597,9 @@ module.exports = {
 
         if (string.length > 520) {
             var embed = new Discord.RichEmbed()
-            .setColor(0x0096ff)
-            .setTitle('The result is over 520 characters, so I made it a file.')
-            .attachFile('./big.txt')
+                .setColor(0x0096ff)
+                .setTitle('The result is over 520 characters, so I made it a file.')
+                .attachFile('./big.txt')
 
             return embed
         } else {
@@ -613,6 +613,32 @@ module.exports = {
         jfile = eJF('package.json')
         //return verison
         return jfile.get('version')
-    }
+    },
 
+    jumble: function jumble(text) {
+        //set vars
+        var s = text.split(' ');
+        var j = s.join(' ')
+
+        //loop for every word & make sure it jumbles
+        while (j == text && s.length != 1) {
+            for (i = 0; i < s.length; i++) {
+                //randomizer with catches
+                if (Math.random() >= 0.5 && i < s.length - 1) {
+                    //swaps 0 with 1
+                    var b = s[i + 1]
+                    s[i + 1] = s[i]
+                    s[i] = b
+
+                } else if (i > 0) {
+                    //swaps 0 with -1
+                    var b = s[i - 1]
+                    s[i - 1] = s[i]
+                    s[i] = b
+                }
+            }
+            j = s.join(' ')
+        }
+        return j
+    }
 }

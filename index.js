@@ -90,6 +90,7 @@ bot.on('message', (message) => {
             .addField(`_ _\n${prefix}f`, `Mega F`)
             .addField(`_ _\n${prefix}pi`, `First 1 million digits of Pi`)
             .addField(`_ _\n${prefix}big`, `Make a larger verison of word/text made of the word. Becomes file over 520 characters.\n*Format: ${prefix}big [word] [text (optional)]*`)
+            .addField(`_ _\n${prefix}jumble`, `Jumbles the words in a sentence so it's confusing to read.\n*Format: ${prefix}jumble [text]*`)
             .addField(`_ _\n${prefix}emojify`, `Turn all characters into emojis.\n*Format: ${prefix}emojify [text]*`)
             .addField(`_ _\n${prefix}ebojify`, `Turn certain characters into :b:.\n*Format: ${prefix}ebojify [text]*`)
             .addField(`_ _\n${prefix}superscript`, `Turn all numbers and letters plus a few math symbols into superscript. Some letters are always lowercase or replaced with something similar due to Unicode limitations.\n*Format: ${prefix}superscript [text]*`)
@@ -929,6 +930,23 @@ bot.on('message', (message) => {
         return
     }
 
+    if (command == `${prefix}jumble`) {
+        //set higher argument
+        var msg;
+        //test for args
+        if (args[0]) {
+            //args found, generate jumbled text
+            msg = cmd.jumble(args.join(' '))
+        } else {
+            //state format
+            msg = `Format: ${prefix}jumble [text]`
+        }
+        //send message & log & prevent unneeded code
+        message.channel.send(msg)
+        cmd.logmsg(msg, message, bot)
+        return
+    }
+
     //define command & grab Eval Code 
     var firstLn = message.content.split('\n')[0]
     var evalCode = cmd.evalCode('get')
@@ -991,7 +1009,7 @@ bot.on('message', (message) => {
 
     //Non-triggered and alternatively triggered commands
     if (message.isMemberMentioned(bot.users.get(bot.user.id)) && message.channel.id != '449759068941189151' && message.content.replace('@everyone', '') == message.content) {
-        if (message.content.replace(new RegExp(`<@${bot.user.id}>`, 'g'), '').replace(/ /g, '').toLowerCase() == 'prefix') { //Change if changing bot login
+        if (message.content.replace(new RegExp(`<@${bot.user.id}>`, 'g'), '').replace(/ /g, '').toLowerCase() == 'prefix') { 
             //create higher variable
             var premsg
             //set message with custom response

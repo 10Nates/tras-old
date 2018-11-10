@@ -1,6 +1,6 @@
 # TRAS
 # Text-Based Response Automation System
-# Version 2.0.8
+# Version 2.1
 __Made by Nathan B @ https://nate.illegaldomain.com__
 ----------------------------------
 
@@ -33,6 +33,10 @@ First 1 million digits of Pi
 Make a larger verison of word/text made of the word.
 *Format: ${prefix}big [word] [text (optional)]*
  
+>__txt.jumble__
+Jumbles the words in a sentence so it's confusing to read.
+*Format: ${prefix}jumble [text]*
+
 >__txt.emojify__
 Turn all characters into emojis.
 *Format: txt.emojify [text]*
