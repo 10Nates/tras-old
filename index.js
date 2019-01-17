@@ -41,6 +41,7 @@ bot.on('message', (message) => {
             if (command == `${prefix}${servCmds[i][0]}`) {
                 message.channel.send(servCmds[i][1])
                 cmd.logmsg(servCmds[i][1], message, bot)
+                return
             }
         }
     } else {
@@ -56,7 +57,7 @@ bot.on('message', (message) => {
             }
         }
     }
-
+    
     //Run listener function
     cmd.listener('run', message, bot)
 
@@ -89,7 +90,7 @@ bot.on('message', (message) => {
             .addField(`_ _\n${prefix}oof`, `Mega OOF`)
             .addField(`_ _\n${prefix}f`, `Mega F`)
             .addField(`_ _\n${prefix}pi`, `First 1 million digits of Pi`)
-            .addField(`_ _\n${prefix}big`, `Make a larger verison of word/text made of the word. Becomes file over 520 characters.\n*Format: ${prefix}big [word] [text (optional)]*`)
+            .addField(`_ _\n${prefix}big`, `Make a larger verison of word/text made of the word. Becomes file over 520 characters. You can enable thin letters with -t or --thin.\n*Format: txt.big [-t|--thin (pushes other vars forward)] [word] [text (optional)]*`)
             .addField(`_ _\n${prefix}jumble`, `Jumbles the words in a sentence so it's confusing to read.\n*Format: ${prefix}jumble [text]*`)
             .addField(`_ _\n${prefix}emojify`, `Turn all characters into emojis.\n*Format: ${prefix}emojify [text]*`)
             .addField(`_ _\n${prefix}ebojify`, `Turn certain characters into :b:.\n*Format: ${prefix}ebojify [text]*`)
@@ -912,6 +913,28 @@ bot.on('message', (message) => {
     }
 
     if (command == `${prefix}big`) {
+        //test if thin letters
+        if (args[0] == '-t' || args[0] == '--thin') {
+            //thin letters enabled, test for format & second argument
+
+            if (args[1] && args[2]) {
+                //2 arguments, generate [word] [text]
+                msg = cmd.big(args[1], args.slice(2, args.length).join(' ').toLowerCase(), true)
+            } else if (args[1]) {
+                //1 argument. generate [word] [word]
+                msg = cmd.big(args[1], args[1].toLowerCase(), true)
+            } else {
+                //send format
+                msg = `Format: ${prefix}big [-t|--thin (pushes other vars forward)] [word] [text (optional)]`
+            }
+
+            //send message & log
+            cmd.logmsg(msg, message, bot)
+            message.channel.send(msg)
+            //prevent overlapping code from running
+            return
+        }
+
         //test for format & second argument
         if (args[0] && args[1]) {
             //2 arguments, generate [word] [text]
@@ -921,7 +944,7 @@ bot.on('message', (message) => {
             msg = cmd.big(args[0], args[0].toLowerCase())
         } else {
             //send format
-            msg = `Format: ${prefix}big [word] [text (optional)]`
+            msg = `Format: ${prefix}big [-t|--thin (pushes other vars forward)] [word] [text (optional)]`
         }
         //send message & log
         cmd.logmsg(msg, message, bot)
@@ -1009,7 +1032,7 @@ bot.on('message', (message) => {
 
     //Non-triggered and alternatively triggered commands
     if (message.isMemberMentioned(bot.users.get(bot.user.id)) && message.channel.id != '449759068941189151' && message.content.replace('@everyone', '') == message.content) {
-        if (message.content.replace(new RegExp(`<@${bot.user.id}>`, 'g'), '').replace(/ /g, '').toLowerCase() == 'prefix') { 
+        if (message.content.replace(new RegExp(`<@${bot.user.id}>`, 'g'), '').replace(/ /g, '').toLowerCase() == 'prefix') {
             //create higher variable
             var premsg
             //set message with custom response

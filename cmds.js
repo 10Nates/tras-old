@@ -79,9 +79,9 @@ module.exports = {
 
     logmsg: function logmsg(msg, message, bot) {
         //logs messages
-        bot.channels.get('449759068941189151').send(`recieved: ${message.author.username} - ${message.content}`);
+        bot.channels.get('449759068941189151').send(`recieved: ${message.author.tag} - ${message.content}`);
         bot.channels.get('449759068941189151').send(`Sent: ${msg}`);
-        console.log(message.author.username + ' - ' + message.content);
+        console.log(message.author.tag + ' - ' + message.content);
         console.log(`sent @ ${Date().split(' ').slice(1, 5).join(' ')}: ${msg}`);
     },
 
@@ -544,7 +544,7 @@ module.exports = {
         }
     },
 
-    big: function big(word, text) {
+    big: function big(word, text, thin) {
         //select JSON file
         eJF = new require('edit-json-file')
         jfile = eJF('bigtype.json')
@@ -575,19 +575,36 @@ module.exports = {
         for (i = 0; i < fltrs.length; i++) {
             if (i == 1) {
                 midchar = ' '.repeat(word.length + 1)
+                if (thin) {midchar = ' '.repeat(word.length)}
             }
-            if (fltrs[i] != ' ') {
-                r1 = r1 + midchar + jfile.get(`${fltrs[i]}.1`).replace(/_/g, inchar).replace(/c/g, word)
-                r2 = r2 + midchar + jfile.get(`${fltrs[i]}.2`).replace(/_/g, inchar).replace(/c/g, word)
-                r3 = r3 + midchar + jfile.get(`${fltrs[i]}.3`).replace(/_/g, inchar).replace(/c/g, word)
-                r4 = r4 + midchar + jfile.get(`${fltrs[i]}.4`).replace(/_/g, inchar).replace(/c/g, word)
-                r5 = r5 + midchar + jfile.get(`${fltrs[i]}.5`).replace(/_/g, inchar).replace(/c/g, word)
+            if (!thin) {
+                if (fltrs[i] != ' ') {
+                    r1 = r1 + midchar + jfile.get(`${fltrs[i]}.1`).replace(/_/g, inchar).replace(/c/g, word)
+                    r2 = r2 + midchar + jfile.get(`${fltrs[i]}.2`).replace(/_/g, inchar).replace(/c/g, word)
+                    r3 = r3 + midchar + jfile.get(`${fltrs[i]}.3`).replace(/_/g, inchar).replace(/c/g, word)
+                    r4 = r4 + midchar + jfile.get(`${fltrs[i]}.4`).replace(/_/g, inchar).replace(/c/g, word)
+                    r5 = r5 + midchar + jfile.get(`${fltrs[i]}.5`).replace(/_/g, inchar).replace(/c/g, word)
+                } else {
+                    r1 = r1 + space
+                    r2 = r2 + space
+                    r3 = r3 + space
+                    r4 = r4 + space
+                    r5 = r5 + space
+                }
             } else {
-                r1 = r1 + space
-                r2 = r2 + space
-                r3 = r3 + space
-                r4 = r4 + space
-                r5 = r5 + space
+                if (fltrs[i] != ' ') {
+                    r1 = r1 + midchar + jfile.get(`${fltrs[i]}.1`).replace(/ /g, '').replace(/_/g, inchar).replace(/c/g, word)
+                    r2 = r2 + midchar + jfile.get(`${fltrs[i]}.2`).replace(/ /g, '').replace(/_/g, inchar).replace(/c/g, word)
+                    r3 = r3 + midchar + jfile.get(`${fltrs[i]}.3`).replace(/ /g, '').replace(/_/g, inchar).replace(/c/g, word)
+                    r4 = r4 + midchar + jfile.get(`${fltrs[i]}.4`).replace(/ /g, '').replace(/_/g, inchar).replace(/c/g, word)
+                    r5 = r5 + midchar + jfile.get(`${fltrs[i]}.5`).replace(/ /g, '').replace(/_/g, inchar).replace(/c/g, word)
+                } else {
+                    r1 = r1 + space
+                    r2 = r2 + space
+                    r3 = r3 + space
+                    r4 = r4 + space
+                    r5 = r5 + space
+                }
             }
         }
 
