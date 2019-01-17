@@ -1,11 +1,15 @@
 {
   "prefix": {
-    "default": "txt."
+    "default": "txt.",
+    "517483934041374720": "tras."
   },
   "cmds": {
     "186507006008360960": {},
     "528769615023833108": {
       "owo": "Degenerates like you should be burned at stake."
+    },
+    "427273793254457344": {
+      "its": "so big Thats what she said 😉"
     },
     "482297948965830677": {
       "owo": "Degenerates like you should be burned at stake.",
@@ -21,7 +25,9 @@
       "rank": "Ranks are stupid. They're useless, don't mean anything, and bother you constantly. Their only purpose is to give you a number for how much you've sent. It doesn't tell you anything else, but everyone treats it like some kind of magic number. News flash, it's not! Do YOU know what the numbers are counting, or do you just assume it's meaningful? \"XP\" doesn't mean anything. There is no \"XP\" on Discord. I dunno, maybe that's just my opinion, but if you for some reaosn after this still think I like the idea, you obviously haven't been paying attention."
     }
   },
-  "randSpk": {},
+  "randSpk": {
+    "459367308926779392": true
+  },
   "listener": {
     "optOut": {},
     "relays": {}
