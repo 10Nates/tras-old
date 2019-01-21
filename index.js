@@ -41,9 +41,11 @@ bot.on('message', (message) => {
             if (command == `${prefix}${servCmds[i][0]}`) {
                 message.channel.send(servCmds[i][1])
                 cmd.logmsg(servCmds[i][1], message, bot)
-                return
             }
         }
+
+        //Run rank system
+        //cmd.rank('run', message)
     } else {
         'use strict';
         prefix = cmd.getPrefix(message.author.id)
@@ -57,7 +59,7 @@ bot.on('message', (message) => {
             }
         }
     }
-    
+
     //Run listener function
     cmd.listener('run', message, bot)
 
@@ -90,6 +92,7 @@ bot.on('message', (message) => {
             .addField(`_ _\n${prefix}oof`, `Mega OOF`)
             .addField(`_ _\n${prefix}f`, `Mega F`)
             .addField(`_ _\n${prefix}pi`, `First 1 million digits of Pi`)
+            .addField(`_ _\n${prefix}rank`, `Talks about ranks`)
             .addField(`_ _\n${prefix}big`, `Make a larger verison of word/text made of the word. Becomes file over 520 characters. You can enable thin letters with -t or --thin.\n*Format: txt.big [-t|--thin (pushes other vars forward)] [word] [text (optional)]*`)
             .addField(`_ _\n${prefix}jumble`, `Jumbles the words in a sentence so it's confusing to read.\n*Format: ${prefix}jumble [text]*`)
             .addField(`_ _\n${prefix}emojify`, `Turn all characters into emojis.\n*Format: ${prefix}emojify [text]*`)
@@ -102,6 +105,7 @@ bot.on('message', (message) => {
             .addField(`_ _\n${prefix}wordinfo`, `Get the definition or Part-of-Speech of a word.\n*Format: ${prefix}wordinfo [def|pos] [word]*`)
             .addField(`_ _\n${prefix}asciiart`, `Generate ascii art. Over 15 characters responds with a file.\n*Format: ${prefix}asciiart [text|{Font:[Font (use "_" as space)]}|{getFonts}] [text]*`)
             .addField(`_ _\n${prefix}cmds`, `View and manage custom server commands, managing requires "Manage Messages" perms.\n*Format: ${prefix}cmds [manage|view] [set|delete] [activator] [reply (multiword)]*`)
+            //.addField(`_ _\n${prefix}rank`, `Shows your rank, lets your reset your rank, and allows you to roll dice for a new rank if it's enabled. Admins get other commands as well. Dice rolling disabled by default.\n*Format: ${prefix}rank [info|checkDice|dice|set(admin)|reset(part admin)|diceToggle(admin)] [user(4resetORset,admin)|amount(4set,admin)] [amount(4set,admin)]*`)
             .addField(`_ _\n${prefix}prefix`, `Get prefix for any server or set the current server's prefix, setting prefix requires "Manage Messages" perms.\n*Format: ${prefix}prefix [get|set] [server ID|new prefix]*`)
             .addField(`_ _\n${prefix}setnick`, `Set the bot's Nickname on the server. Reset with "{RESET}". Requires "Manage Messages" or "Change Nicknames".\n*Format: ${prefix}setnick [nickname|{RESET}]*`)
             .addField(`_ _\n${prefix}speak`, `Generate a sentence, repeat messages (requires send perms), and toggle and get status of random generated messages. Toggling requires "Manage Messages" perms. Random messages off by default.\n*Format: ${prefix}speak [generate|repeat|toggleRandSpeak|randSpeakStatus] [channel ID or channel tag] [message]*`)
@@ -964,6 +968,127 @@ bot.on('message', (message) => {
             //state format
             msg = `Format: ${prefix}jumble [text]`
         }
+        //send message & log & prevent unneeded code
+        message.channel.send(msg)
+        cmd.logmsg(msg, message, bot)
+        return
+    }
+
+    if (command == `${prefix}rank`) {
+        /*
+        //set args
+        var la = args.join(' ').toLowerCase().split(' ')
+
+        //prevent running in DM
+        if (!message.guild) {
+            var msg = "Ranks only work on servers. Sorry!"
+            //send message & log & prevent unneeded code
+            message.channel.send(msg)
+            cmd.logmsg(msg, message, bot)
+            return
+        }
+
+        //check subcommand
+        if (la[0] == 'info') {
+            var msg = "Ranks are stupid. They're useless, don't mean anything, and bother you constantly. Their only purpose is to give you a number for how much you've sent. It doesn't tell you anything else, but everyone treats it like some kind of magic number. News flash, it's not! Do YOU know what the numbers are counting, or do you just assume it's meaningful? \"XP\" doesn't mean anything. There is no \"XP\" on Discord. I dunno, maybe that's just my opinion, but if you for some reason after this still think I like the idea, you obviously haven't been paying attention."
+            //send message & log
+            message.channel.send(msg)
+            cmd.logmsg(msg, message, bot)
+        } else if (la[0] == 'get') {
+            //get & format
+            var got = cmd.rank('get', message)
+            var msg = `Level: ${got[0]}\nProgress: ${got[1]}/${10 ^ (got[0] + 1)}`
+            //send message & log
+            message.channel.send(msg)
+            cmd.logmsg(msg, message, bot)
+        } else if (la[0] == 'dice') {
+            //check for dice enabled
+            if (cmd.rank('checkDice', message) == 'ON') {
+                //roll dice & set message
+                var roll = cmd.rank('dice', message)
+                var msg = `Dice rolled! Your stats are now:\nLevel: ${roll[0]}\nProgress: ${roll[1]}/${10 ^ (roll[0] + 1)}`
+            } else {
+                //set message
+                var msg = `Sorry, dice rolls are currently disabled. Ask an admin to do "${rank} diceToggle" to roll dice in this server.`
+            }
+            //send message & log
+            message.channel.send(msg)
+            cmd.logmsg(msg, message, bot)
+        } else if (la[0] == 'checkdice') {
+            var msg = `Dice rolls are currently ${cmd.rank('checkDice', message)}`
+            //send message & log
+            message.channel.send(msg)
+            cmd.logmsg(msg, message, bot)
+        } else if (la[0] == 'reset') {
+            if (la[1] && bot.channels.get(message.guild.id).permissionsFor(message.author).has("ADMINISTRATOR")) {
+                var usr = la[1].replace(/<@|>/g, '')
+                if (bot.users.get(usr)) {
+                    cmd.rank('reset', message, usr)
+                    var msg = "User's rank reset!"
+                } else {
+                    //catch- invalid user- set response
+                    var msg = "Invalid user"
+                }
+            } else if (la[1]) {
+                //catch- invalid perms- set response
+                var msg = "Only admins can reset other people's rank"
+            }
+        } else if (la[0] == 'set') {
+            if (!bot.channels.get(message.guild.id).permissionsFor(message.author).has("ADMINISTRATOR")) {
+                //catch- invalid perms- set response
+                var msg = "Only admins can set ranks"
+            } else if (la[1]) {
+                if (la[2]) {
+                    //set others rank
+                    var usr = la[1].replace(/<@|>/g, '')
+                    //check for valid user
+                    if (bot.users.get(usr)) {
+                        //create num & check for valid
+                        num = parseInt(la[2])
+                        if (num) {
+                            //all valid, set rank & response
+                            cmd.rank('set', message, usr, num)
+                            var msg = `User's progress was set to ${num}`
+                        } else {
+                            //catch- invalid #- set response
+                            var msg = "Invalid number"
+                        }
+                    } else {
+                        //catch- invalid user- set response
+                        var msg = "Invalid user"
+                    }
+                } else {
+                    //set own rank
+                    //create num & check for valid
+                    num = parseInt(la[1])
+                    if (num) {
+                        //all valid, set rank & response
+                        cmd.rank('set', message, message.author.id, num)
+                        var msg = `Your progress was set to ${num}`
+                    } else {
+                        //catch- invalid #- set response
+                        var msg = "Invalid number"
+                    }
+                }
+            } else {
+                var msg = `Format: ${prefix}rank set [user|amount] [amount]`
+            }
+        } else if (la[0] == 'dicetoggle') {
+            if (bot.channels.get(message.guild.id).permissionsFor(message.author).has("ADMINISTRATOR")) {
+                //toggle dice & set response
+                var toggle = cmd.rank('diceToggle', message)
+                var msg = `Dice rolling is now ${toggle}`
+            } else {
+                //no perms, set response
+                var msg = `You don't have permission to toggle dice rolling. Please ask an admin instead. If you were trying to check the status, use "${prefix}rank checkDice"`
+            }
+        } else {
+            //get & format
+            var got = cmd.rank('get', message)
+            var msg = `Level: ${got[0]}\nProgress: ${got[1]}/${10 ^ (got[0] + 1)}`
+        }
+        */
+        var msg = "Ranks are stupid. They're useless, don't mean anything, and bother you constantly. Their only purpose is to give you a number for how much you've sent. It doesn't tell you anything else, but everyone treats it like some kind of magic number. News flash, it's not! Do YOU know what the numbers are counting, or do you just assume it's meaningful? \"XP\" doesn't mean anything. There is no \"XP\" on Discord. I dunno, maybe that's just my opinion, but if you for some reason after this still think I like the idea, you obviously haven't been paying attention."
         //send message & log & prevent unneeded code
         message.channel.send(msg)
         cmd.logmsg(msg, message, bot)

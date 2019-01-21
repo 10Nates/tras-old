@@ -1,6 +1,6 @@
 # TRAS
 # Text-Based Response Automation System
-# Version 2.2
+# Version 2.4
 __Made by Nathan B @ https://nate.illegaldomain.com__
 ----------------------------------
 
@@ -28,6 +28,9 @@ Mega F
  
 >__txt.pi__
 First 1 million digits of Pi
+
+>__txt.rank__ 
+Talks about ranks
 
 >__txt.big__
 Make a larger verison of word/text made of the word. Becomes file over 520 characters. You can enable thin letters with -t or --thin.
@@ -76,7 +79,7 @@ Generate ascii art. Over 15 characters responds with a file.
 >__txt.cmds__
 View and manage custom server commands, managing requires "Manage Messages" perms.
 *Format: txt.cmds [manage|view] [set|delete] [trigger] [reply]*
- 
+
 >__txt.prefix__
 Get prefix for any server or set the current server's prefix, setting prefix requires "Manage Messages" perms.
 *Format: txt.prefix [get|set] [server ID|new prefix]*

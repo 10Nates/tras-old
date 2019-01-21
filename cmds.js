@@ -82,7 +82,8 @@ module.exports = {
         bot.channels.get('449759068941189151').send(`recieved: ${message.author.tag} - ${message.content}`);
         bot.channels.get('449759068941189151').send(`Sent: ${msg}`);
         console.log(message.author.tag + ' - ' + message.content);
-        console.log(`sent @ ${Date().split(' ').slice(1, 5).join(' ')}: ${msg}`);
+        console.log(`sent: ${msg}`);
+        //@ ${Date().split(' ').slice(1, 5).join(' ')} unneeded w/ SystemD
     },
 
     runHive: function runHive(message, bot) {
@@ -575,7 +576,7 @@ module.exports = {
         for (i = 0; i < fltrs.length; i++) {
             if (i == 1) {
                 midchar = ' '.repeat(word.length + 1)
-                if (thin) {midchar = ' '.repeat(word.length)}
+                if (thin) { midchar = ' '.repeat(word.length) }
             }
             if (!thin) {
                 if (fltrs[i] != ' ') {
@@ -657,5 +658,103 @@ module.exports = {
             j = s.join(' ')
         }
         return j
-    }
+    }/*,
+
+    rank: function rank(run_get_set_reset_dice_diceToggle_checkDice, msg, resetID, setNum) {
+        //load importand vars
+        var cmd = run_get_set_reset_dice_diceToggle_checkDice
+        var eJF = new require('edit-json-file')
+        var jfile = eJF('data.json')
+
+        //create some shortcuts
+        var data = {}
+        data.lvl = jfile.get(`rank.${msg.guild.id}.${msg.author.id}.lvl`)
+        data.progress = jfile.get(`rank.${msg.guild.id}.${msg.author.id}.progress`)
+
+        var diceActive = jfile.get(`rank.${msg.guild.id}.dice`)
+        function set(cat, set) { jfile.set(`rank.${msg.guild.id}.${msg.author.id}.${cat}`, set) }
+
+        if (!data) {
+            //create profile if there is none
+            set('lvl', 0)
+            set('progress', 0)
+            jfile.save()
+        }
+
+        if (cmd == 'diceToggle') {
+            //ripped from randspeak - test for existence
+            if (jfile.get(`rank.${msg.guild.id}.dice`)) {
+                //exists, set to not exist
+                jfile.set(`rank.${msg.guild.id}.dice`, undefined)
+                jfile.save()
+                //return situation
+                return 'OFF'
+            } else {
+                //doesn't exist, set to exist
+                jfile.set(`rank.${msg.guild.id}.dice`, true)
+                jfile.save()
+                //return situation
+                return 'ON'
+            }
+        }
+
+        if (cmd == 'run') {
+            //tracking & adding
+            var recieve = Math.ceil(msg.content.length / 10)
+            var setD = data.progress + recieve
+            set('progress', setD)
+            if (setD > 10 ^ data.lvl) {
+                var lvl = Math.log(setD)
+                if (lvl == undefined) {
+                    lvl = 0
+                }
+                lvl = Math.floor(lvl)
+                set('lvl', lvl)
+            }
+            jfile.save()
+
+        }
+
+        if (cmd == 'get') {
+            //returns current lvl & progress
+            return [data.lvl, data.progress]
+
+        } else if (cmd == 'set') {
+            //sets level & progress
+            var progress = setNum
+            var lvl = Math.log(progress)
+            if (lvl == undefined) {
+                lvl = 0
+            }
+            lvl = Math.floor(lvl)
+            jfile.set(`rank.${msg.guild.id}.${resetID}.lvl`, lvl)
+            jfile.set(`rank.${msg.guild.id}.${resetID}.progress`, progress)
+            jfile.save()
+            return [progress, lvl]
+
+        } else if (cmd == 'reset') {
+            //resets specific user's rank
+            jfile.set(`rank.${msg.guild.id}.${resetID}.lvl`, 0)
+            jfile.set(`rank.${msg.guild.id}.${resetID}.progress`, 0)
+            jfile.save()
+
+        } else if (cmd == 'dice' && diceActive) {
+            //gives random lvl between 0 and 100, then sets the progress appropriately
+            const lvl = Math.round(Math.random() * 100)
+            var progress = Math.ceil(10 ^ lvl) + Math.ceil(Math.random() * 9)
+            set('lvl', lvl)
+            set('progress', progress)
+            jfile.save()
+            return [lvl, progress]
+
+        } else if (cmd == 'dice' && !diceActive) {
+            return false
+        } else if (cmd == 'checkDice') {
+            if (jfile.get(`rank.${msg.guild.id}.dice`)) {
+                return "ON"
+            } else {
+                return "OFF"
+            }
+        }
+    }*/
 }
