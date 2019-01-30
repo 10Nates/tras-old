@@ -1,6 +1,6 @@
 # TRAS
 # Text-Based Response Automation System
-# Version 2.6
+# Version 2.7
 __Made by Nathan B @ https://nate.illegaldomain.com__
 ----------------------------------
 

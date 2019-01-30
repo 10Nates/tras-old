@@ -59,6 +59,7 @@ bot.on('message', (message) => {
             }
         }
     }
+    prefix = 'txt-testing.' //REMOVE
 
     //Run listener function
     cmd.listener('run', message, bot)
@@ -83,16 +84,18 @@ bot.on('message', (message) => {
         //respond in activated channel
         message.channel.send("I slid a command list into your DMs.")
         //embed of commands
-        const embed = new Discord.RichEmbed()
+        var embed = new Discord.RichEmbed()
             .setColor(0x0096ff)
-            .setAuthor('Commands List', bot.user.avatarURL)
+            .setAuthor('TRAS Command List', bot.user.avatarURL)
             .setDescription('*Using prefix of server this message was activated from*')
             .addField(`**------------------------**\n_ _\n${prefix}help`, `Summons this help list.`)
             .addField(`_ _\n${prefix}about`, 'Gives information about the bot.')
+        var embed2 = new Discord.RichEmbed()
+            .setColor(0x0096ff)
+            .setAuthor('--Primary Commands--')
             .addField(`_ _\n${prefix}oof`, `Mega OOF`)
             .addField(`_ _\n${prefix}f`, `Mega F`)
             .addField(`_ _\n${prefix}pi`, `First 1 million digits of Pi`)
-            //.addField(`_ _\n${prefix}rank`, `Talks about ranks`)
             .addField(`_ _\n${prefix}big`, `Make a larger verison of word/text made of the word. Becomes file over 520 characters. You can enable thin letters with -t or --thin.\n*Format: txt.big [-t|--thin (pushes other vars forward)] [word] [text (optional)]*`)
             .addField(`_ _\n${prefix}jumble`, `Jumbles the words in a sentence so it's confusing to read.\n*Format: ${prefix}jumble [text]*`)
             .addField(`_ _\n${prefix}emojify`, `Turn all characters into emojis.\n*Format: ${prefix}emojify [text]*`)
@@ -104,6 +107,9 @@ bot.on('message', (message) => {
             .addField(`_ _\n${prefix}overcomp`, `Replaces all words with synonyms of the word.\n*Format: ${prefix}overcomp [text]*`)
             .addField(`_ _\n${prefix}wordinfo`, `Get the definition or Part-of-Speech of a word.\n*Format: ${prefix}wordinfo [def|pos] [word]*`)
             .addField(`_ _\n${prefix}asciiart`, `Generate ascii art. Over 15 characters responds with a file.\n*Format: ${prefix}asciiart [text|{Font:[Font (use "_" as space)]}|{getFonts}] [text]*`)
+            //const embed4 = new Discord.RichEmbed()
+            //  .setColor(0x0096ff)
+            //.setAuthor('Complex Commands')
             .addField(`_ _\n${prefix}cmds`, `View and manage custom server commands, managing requires "Manage Messages" perms.\n*Format: ${prefix}cmds [manage|view] [set|delete] [activator] [reply (multiword)]*`)
             .addField(`_ _\n${prefix}rank`, `Shows your rank, lets your reset your rank, and allows you to roll dice for a new rank if it's enabled. Admins get other commands as well. Dice rolling disabled by default.\n*Format: ${prefix}rank [info|checkDice|dice|set(admin)|reset(part admin)|diceToggle(admin)] [user(4resetORset,admin)|amount(4set,admin)|-real(4info)] [amount(4set,admin)]*`)
             .addField(`_ _\n${prefix}prefix`, `Get prefix for any server or set the current server's prefix, setting prefix requires "Manage Messages" perms.\n*Format: ${prefix}prefix [get|set] [server ID|new prefix]*`)
@@ -111,11 +117,39 @@ bot.on('message', (message) => {
             .addField(`_ _\n${prefix}speak`, `Generate a sentence, repeat messages (requires send perms), and toggle and get status of random generated messages. Toggling requires "Manage Messages" perms. Random messages off by default.\n*Format: ${prefix}speak [generate|repeat|toggleRandSpeak|randSpeakStatus] [channel ID or channel tag] [message]*`)
             .addField(`_ _\n${prefix}combos`, `Sends file with all possible combinations of the units you have selected and given.\n*Format: ${prefix}combos [words|characters] [items]*`)
             .addField(`_ _\n${prefix}listen`, `Relays text channels into your DMs. Only allows listening to channels everyone can see. Servers are able to individually opt out. Opted in by default.\n*Format: ${prefix}listen [channel ID or channel tag|stop|list|opt] [channel ID or channel tag|set|check] [serverID|in or out]*`)
+        var embed3 = new Discord.RichEmbed()
+            .setColor(0x0096ff)
+            .setAuthor('--Alternatively Triggered Commands--')
             .addField(`_ _\nMention me`, `I respond "What's :b:oppin'"`)
             .addField(`_ _\nMention me with message "PREFIX"`, `I respond with the server's prefix and the help command.`)
             .addField(`_ _\nGenerated messages`, `Fully generated messages *(not an AI so they're terrible and don't make sense)* that can be toggled to randomly say them in response to other messages. Random messages will not reply to commands.`)
+        var embed4 = new Discord.RichEmbed()
+            .setColor(0x0096ff)
+            .setAuthor('--Server-Specific Commands--')
+            .setDescription('*For server this message was activated from*')
+
+        //embed server-specific commands
+        var servCmds
+        if (message.guild) { servCmds = cmd.servCmds('array', message.guild.id) } else { servCmds = cmd.servCmds('array', message.author.id) }
+        if (servCmds) {
+            if (servCmds.length < 26) {
+                for (i = 0; i < servCmds.length; i++) {
+                    var servCmd = `${prefix}${servCmds[i][0]}`
+                    var servResp = servCmds[i][1]
+                    embed4 = embed4.addField(`_ _\n${servCmd}`, `I respond "${servResp}"`)
+                }
+            } else {
+                embed4 = embed4.addField(`_ _\nThe server's number of commands exceeds discord's embed field cap of 25. Use "${prefix}cmds view" instead.`, '_ _')
+            }
+        } else {
+            embed4 = embed4.addField('_ _\nNo custom commands are currently on this server', '_ _')
+        }
+
         //send
         message.author.send(embed);
+        message.author.send(embed2);
+        message.author.send(embed3);
+        message.author.send(embed4);
         cmd.logmsg("I slid a command list into your DMs.", message, bot);
         //prevent running unneeded code
         return
@@ -268,6 +302,9 @@ bot.on('message', (message) => {
                     var msg = cmd.servCmds('list', message.guild.id)
                 } else {
                     var msg = 'No custom commands on this server.'
+                }
+                if (msg.length < 2000) {
+                    msg = `The list of custom commands exceeds Discord's character limit. Please try using "${prefix}help" if you have under 26 commands, or contact TRAS' owner for a file.`
                 }
                 //send
                 message.channel.send(msg)
