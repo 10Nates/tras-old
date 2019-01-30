@@ -999,7 +999,7 @@ bot.on('message', (message) => {
             if (cmd.rank('checkDice', message) == 'ON') {
                 //roll dice & set message
                 var roll = cmd.rank('dice', message)
-                var msg = `Dice rolled! Your stats are now:\nLevel: ${roll[0]}\nProgress: ${got[1]}/${Math.pow(10, got[0] + 1)}`
+                var msg = `Dice rolled! Your stats are now:\nLevel: ${roll[0]}\nProgress: ${roll[1]}/${Math.pow(10, roll[0] + 1)}`
             } else {
                 //set message
                 var msg = `Sorry, dice rolls are currently disabled. Ask an admin to do "${prefix}rank diceToggle" to roll dice in this server.`
