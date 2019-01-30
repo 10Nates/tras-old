@@ -29,6 +29,7 @@ bot.on('message', (message) => {
     //Per-message setup
     const args = message.content.slice().trim().split(/ +/g);
     const command = args.shift().toLowerCase();
+    var servCmdProcessed = false; // anti-return stopping function
     var prefix;
     //Allocate prefix (guild or DM prefix) and run server-based commands
     if (message.guild) {
@@ -41,11 +42,9 @@ bot.on('message', (message) => {
             if (command == `${prefix}${servCmds[i][0]}`) {
                 message.channel.send(servCmds[i][1])
                 cmd.logmsg(servCmds[i][1], message, bot)
+                servCmdProcessed = true // anti-return stopping function
             }
         }
-
-        //Run rank system
-        //cmd.rank('run', message)
     } else {
         'use strict';
         prefix = cmd.getPrefix(message.author.id)
@@ -56,6 +55,7 @@ bot.on('message', (message) => {
             if (command == `${prefix}${servCmds[i][0]}`) {
                 message.channel.send(servCmds[i][1])
                 cmd.logmsg(servCmds[i][1], message, bot)
+                servCmdProcessed = true // anti-return stopping function
             }
         }
     }
@@ -92,7 +92,7 @@ bot.on('message', (message) => {
             .addField(`_ _\n${prefix}oof`, `Mega OOF`)
             .addField(`_ _\n${prefix}f`, `Mega F`)
             .addField(`_ _\n${prefix}pi`, `First 1 million digits of Pi`)
-            .addField(`_ _\n${prefix}rank`, `Talks about ranks`)
+            //.addField(`_ _\n${prefix}rank`, `Talks about ranks`)
             .addField(`_ _\n${prefix}big`, `Make a larger verison of word/text made of the word. Becomes file over 520 characters. You can enable thin letters with -t or --thin.\n*Format: txt.big [-t|--thin (pushes other vars forward)] [word] [text (optional)]*`)
             .addField(`_ _\n${prefix}jumble`, `Jumbles the words in a sentence so it's confusing to read.\n*Format: ${prefix}jumble [text]*`)
             .addField(`_ _\n${prefix}emojify`, `Turn all characters into emojis.\n*Format: ${prefix}emojify [text]*`)
@@ -105,7 +105,7 @@ bot.on('message', (message) => {
             .addField(`_ _\n${prefix}wordinfo`, `Get the definition or Part-of-Speech of a word.\n*Format: ${prefix}wordinfo [def|pos] [word]*`)
             .addField(`_ _\n${prefix}asciiart`, `Generate ascii art. Over 15 characters responds with a file.\n*Format: ${prefix}asciiart [text|{Font:[Font (use "_" as space)]}|{getFonts}] [text]*`)
             .addField(`_ _\n${prefix}cmds`, `View and manage custom server commands, managing requires "Manage Messages" perms.\n*Format: ${prefix}cmds [manage|view] [set|delete] [activator] [reply (multiword)]*`)
-            //.addField(`_ _\n${prefix}rank`, `Shows your rank, lets your reset your rank, and allows you to roll dice for a new rank if it's enabled. Admins get other commands as well. Dice rolling disabled by default.\n*Format: ${prefix}rank [info|checkDice|dice|set(admin)|reset(part admin)|diceToggle(admin)] [user(4resetORset,admin)|amount(4set,admin)] [amount(4set,admin)]*`)
+            .addField(`_ _\n${prefix}rank`, `Shows your rank, lets your reset your rank, and allows you to roll dice for a new rank if it's enabled. Admins get other commands as well. Dice rolling disabled by default.\n*Format: ${prefix}rank [info|checkDice|dice|set(admin)|reset(part admin)|diceToggle(admin)] [user(4resetORset,admin)|amount(4set,admin)|-real(4info)] [amount(4set,admin)]*`)
             .addField(`_ _\n${prefix}prefix`, `Get prefix for any server or set the current server's prefix, setting prefix requires "Manage Messages" perms.\n*Format: ${prefix}prefix [get|set] [server ID|new prefix]*`)
             .addField(`_ _\n${prefix}setnick`, `Set the bot's Nickname on the server. Reset with "{RESET}". Requires "Manage Messages" or "Change Nicknames".\n*Format: ${prefix}setnick [nickname|{RESET}]*`)
             .addField(`_ _\n${prefix}speak`, `Generate a sentence, repeat messages (requires send perms), and toggle and get status of random generated messages. Toggling requires "Manage Messages" perms. Random messages off by default.\n*Format: ${prefix}speak [generate|repeat|toggleRandSpeak|randSpeakStatus] [channel ID or channel tag] [message]*`)
@@ -975,7 +975,6 @@ bot.on('message', (message) => {
     }
 
     if (command == `${prefix}rank`) {
-        /*
         //set args
         var la = args.join(' ').toLowerCase().split(' ')
 
@@ -990,17 +989,14 @@ bot.on('message', (message) => {
 
         //check subcommand
         if (la[0] == 'info') {
-            var msg = "Ranks are stupid. They're useless, don't mean anything, and bother you constantly. Their only purpose is to give you a number for how much you've sent. It doesn't tell you anything else, but everyone treats it like some kind of magic number. News flash, it's not! Do YOU know what the numbers are counting, or do you just assume it's meaningful? \"XP\" doesn't mean anything. There is no \"XP\" on Discord. I dunno, maybe that's just my opinion, but if you for some reason after this still think I like the idea, you obviously haven't been paying attention."
-            //send message & log
-            message.channel.send(msg)
-            cmd.logmsg(msg, message, bot)
-        } else if (la[0] == 'get') {
-            //get & format
-            var got = cmd.rank('get', message)
-            var msg = `Level: ${got[0]}\nProgress: ${got[1]}/${10 ^ (got[0] + 1)}`
-            //send message & log
-            message.channel.send(msg)
-            cmd.logmsg(msg, message, bot)
+            if (la[1] == '-real') {
+                var msg = `TRAS' "progress" meter is based off content and size of your messages, as well as similarity between your past messages.\nLevels are the logarithm of your "progress" to base 10, meaning you require 10 times the "progress" per level.\nI included the "dice roll" feature because of my thoughts about levels. However, Mee6's way of ranking is garbage, so I offer a replacement.`
+                //send message & log
+                message.channel.send(msg)
+                cmd.logmsg(msg, message, bot)
+                return
+            }
+            var msg = `Ranks are stupid. They're useless, don't mean anything, and bother you constantly. Their only purpose is to give you a number for how much you've sent. It doesn't tell you anything else, but everyone treats it like some kind of magic number. News flash, it's not! Do YOU know what the numbers are counting, or do you just assume it's meaningful? \"XP\" doesn't mean anything. There is no "XP" on Discord. I dunno, maybe that's just my opinion, but if you for some reason after this still think I like the idea, you obviously haven't been paying attention.\n**use "${prefix}info -real" for actual info**`
         } else if (la[0] == 'dice') {
             //check for dice enabled
             if (cmd.rank('checkDice', message) == 'ON') {
@@ -1011,14 +1007,9 @@ bot.on('message', (message) => {
                 //set message
                 var msg = `Sorry, dice rolls are currently disabled. Ask an admin to do "${rank} diceToggle" to roll dice in this server.`
             }
-            //send message & log
-            message.channel.send(msg)
-            cmd.logmsg(msg, message, bot)
         } else if (la[0] == 'checkdice') {
+            //set message
             var msg = `Dice rolls are currently ${cmd.rank('checkDice', message)}`
-            //send message & log
-            message.channel.send(msg)
-            cmd.logmsg(msg, message, bot)
         } else if (la[0] == 'reset') {
             if (la[1] && bot.channels.get(message.guild.id).permissionsFor(message.author).has("ADMINISTRATOR")) {
                 var usr = la[1].replace(/<@|>/g, '')
@@ -1085,10 +1076,8 @@ bot.on('message', (message) => {
         } else {
             //get & format
             var got = cmd.rank('get', message)
-            var msg = `Level: ${got[0]}\nProgress: ${got[1]}/${10 ^ (got[0] + 1)}`
+            var msg = `Level: ${got[0]}\nProgress: ${got[1]}/${Math.pow(10, got[0] + 1)}`
         }
-        */
-        var msg = "Ranks are stupid. They're useless, don't mean anything, and bother you constantly. Their only purpose is to give you a number for how much you've sent. It doesn't tell you anything else, but everyone treats it like some kind of magic number. News flash, it's not! Do YOU know what the numbers are counting, or do you just assume it's meaningful? \"XP\" doesn't mean anything. There is no \"XP\" on Discord. I dunno, maybe that's just my opinion, but if you for some reason after this still think I like the idea, you obviously haven't been paying attention."
         //send message & log & prevent unneeded code
         message.channel.send(msg)
         cmd.logmsg(msg, message, bot)
@@ -1132,7 +1121,9 @@ bot.on('message', (message) => {
         cmd.logmsg('Used eval command; new code: ' + newEvalCode, message, bot)
         //prevent running unneeded code
         return
-    }
+    }   
+
+    if (servCmdProcessed) { return } //don't run help funciton
 
     if (command.slice(0, prefix.length) == `${prefix}`) {
         //set message
@@ -1174,6 +1165,9 @@ bot.on('message', (message) => {
         //prevent unneeded code
         return
     }
+
+    //Run rank system
+    if (message.guild) { cmd.rank('run', message) }
 
     //random message responses
     if (message.author.id != bot.user.id && message.channel.id != '449759068941189151') {

@@ -658,40 +658,46 @@ module.exports = {
             j = s.join(' ')
         }
         return j
-    }/*,
+    },
 
     rank: function rank(run_get_set_reset_dice_diceToggle_checkDice, msg, resetID, setNum) {
         //load importand vars
         var cmd = run_get_set_reset_dice_diceToggle_checkDice
         var eJF = new require('edit-json-file')
-        var jfile = eJF('data.json')
+        var jfile = eJF('ranks.json')
 
         //create some shortcuts
         var data = {}
-        data.lvl = jfile.get(`rank.${msg.guild.id}.${msg.author.id}.lvl`)
-        data.progress = jfile.get(`rank.${msg.guild.id}.${msg.author.id}.progress`)
+        data.progress = jfile.get(`${msg.guild.id}.${msg.author.id}.prog`)
+        function lvl(prog) {
+            var lvl = Math.floor(Math.log10(prog))
+            if (!lvl || lvl == -Infinity || lvl == Infinity) { lvl = 0 }
+            return lvl
+        }
+        data.lvl = lvl(data.progress)
+        data.lastMsg = jfile.get(`${msg.guild.id}.${msg.author.id}.lastMsg`)
 
-        var diceActive = jfile.get(`rank.${msg.guild.id}.dice`)
-        function set(cat, set) { jfile.set(`rank.${msg.guild.id}.${msg.author.id}.${cat}`, set) }
+        var diceActive = jfile.get(`${msg.guild.id}.dice`)
+        function setProg(set) { jfile.set(`${msg.guild.id}.${msg.author.id}.prog`, set) }
+        function setLastMsg(set) { jfile.set(`${msg.guild.id}.${msg.author.id}.lastMsg`, set) }
 
-        if (!data) {
+        if (!data.progress) {
             //create profile if there is none
-            set('lvl', 0)
-            set('progress', 0)
+            setProg(0)
             jfile.save()
         }
 
         if (cmd == 'diceToggle') {
             //ripped from randspeak - test for existence
-            if (jfile.get(`rank.${msg.guild.id}.dice`)) {
+            if (jfile.get(`${msg.guild.id}.dice`)) {
                 //exists, set to not exist
-                jfile.set(`rank.${msg.guild.id}.dice`, undefined)
+                jfile.set(`${msg.guild.id}.dice`, undefined)
                 jfile.save()
                 //return situation
                 return 'OFF'
             } else {
                 //doesn't exist, set to exist
-                jfile.set(`rank.${msg.guild.id}.dice`, true)
+                jfile.set(`${msg.guild.id}.dice`, true)
                 jfile.save()
                 //return situation
                 return 'ON'
@@ -700,61 +706,116 @@ module.exports = {
 
         if (cmd == 'run') {
             //tracking & adding
-            var recieve = Math.ceil(msg.content.length / 10)
-            var setD = data.progress + recieve
-            set('progress', setD)
-            if (setD > 10 ^ data.lvl) {
-                var lvl = Math.log(setD)
-                if (lvl == undefined) {
-                    lvl = 0
-                }
-                lvl = Math.floor(lvl)
-                set('lvl', lvl)
-            }
+            var msgArr = msg.content.split(/ +/g);
+            if (msgArr.length < 2) { return }
+
+            //handle last message
+            var checkLast = false
+            if (data.lastMsg) { checkLast = true }
+            setLastMsg(msg.content)
             jfile.save()
 
-        }
+            if (!checkLast) {
+                msg.channel.fetchMessages({ limit: 4 }).then(pastMsgs => {
+                    //filter to only author
+                    var fil = pastMsgs.filter(lsMsg => lsMsg.author.id == msg.author.id)
+                    //get name & grab correct
+                    var fils = fil.keyArray()
+                    var prevMsg = fil.get(fils[1])
+                    if (!prevMsg) { prevMsg = {}; prevMsg.content = ' ' } //fallback w/ code reuse
 
-        if (cmd == 'get') {
+                    //semi-simple filter
+                    if (prevMsg.content == msg.content) { return }
+
+                    //advanced filter
+                    var lastMsgArr = prevMsg.content.split(/ +/g);
+                    var c = 0;
+                    for (i = 0; i < msgArr.length; i++) {
+                        if (msgArr[i] == lastMsgArr[i]) {
+                            c += 1
+                        }
+                    }
+                    var threshold = Math.floor(msgArr.length * 0.85)
+                    if (c >= threshold) { return }
+
+                    //remove duplicates from https://stackoverflow.com/questions/9229645/remove-duplicate-values-from-js-array - I also added item.length
+                    var cleanArr = msgArr.filter(function (item, pos) {
+                        return msgArr.indexOf(item) == pos || item.length != 1;
+                    })
+
+                    //find ratio & multiply
+                    var recieve = Math.round(cleanArr.length * (cleanArr.length / msgArr.length))
+                    var setD = data.progress + recieve
+                    if (!setD) { setD = 0 } //fallback
+
+                    setProg(setD)
+                    jfile.save()
+                })
+            } else {
+                var prevMsg = {} //reuse code
+                prevMsg.content = data.lastMsg //set prevMsg
+
+                //semi-simple filter
+                if (prevMsg.content == msg.content) { return }
+
+                //advanced filter
+                var lastMsgArr = prevMsg.content.split(/ +/g);
+                var c = 0;
+                for (i = 0; i < msgArr.length; i++) {
+                    if (msgArr[i] == lastMsgArr[i]) {
+                        c += 1
+                    }
+                }
+                var threshold = Math.floor(msgArr.length * 0.85)
+                if (c >= threshold) { return }
+
+
+                //remove duplicates from https://stackoverflow.com/questions/9229645/remove-duplicate-values-from-js-array - I also added item.length
+                var cleanArr = msgArr.filter(function (item, pos) {
+                    return msgArr.indexOf(item) == pos || item.length != 1;
+                })
+
+                //find ratio & multiply
+                var recieve = Math.round(cleanArr.length * (cleanArr.length / msgArr.length))
+                var setD = data.progress + recieve
+                if (!setD) { setD = 0 } //fallback
+
+                setProg(setD)
+                jfile.save()
+            }
+        } else if (cmd == 'get') {
             //returns current lvl & progress
             return [data.lvl, data.progress]
 
         } else if (cmd == 'set') {
             //sets level & progress
             var progress = setNum
-            var lvl = Math.log(progress)
-            if (lvl == undefined) {
-                lvl = 0
-            }
-            lvl = Math.floor(lvl)
-            jfile.set(`rank.${msg.guild.id}.${resetID}.lvl`, lvl)
-            jfile.set(`rank.${msg.guild.id}.${resetID}.progress`, progress)
+            var lvl = lvl(progress)
+            setProg(progress)
             jfile.save()
-            return [progress, lvl]
+            return [lvl, progress]
 
         } else if (cmd == 'reset') {
             //resets specific user's rank
-            jfile.set(`rank.${msg.guild.id}.${resetID}.lvl`, 0)
-            jfile.set(`rank.${msg.guild.id}.${resetID}.progress`, 0)
+            jfile.set(`${msg.guild.id}.${resetID}.prog`, 0)
             jfile.save()
 
         } else if (cmd == 'dice' && diceActive) {
             //gives random lvl between 0 and 100, then sets the progress appropriately
             const lvl = Math.round(Math.random() * 100)
-            var progress = Math.ceil(10 ^ lvl) + Math.ceil(Math.random() * 9)
-            set('lvl', lvl)
-            set('progress', progress)
+            var progress = Math.ceil(Math.pow(10, lvl)) + Math.ceil(Math.random() * 9)
+            setProg(progress)
             jfile.save()
             return [lvl, progress]
 
         } else if (cmd == 'dice' && !diceActive) {
             return false
         } else if (cmd == 'checkDice') {
-            if (jfile.get(`rank.${msg.guild.id}.dice`)) {
+            if (jfile.get(`${msg.guild.id}.dice`)) {
                 return "ON"
             } else {
                 return "OFF"
             }
         }
-    }*/
+    }
 }

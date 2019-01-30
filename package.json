@@ -1,6 +1,6 @@
 {
   "name": "tras",
-  "version": "2.4",
+  "version": "2.5",
   "description": "Text-based Response Automation System",
   "main": "index.js",
   "author": "Nathan B",
