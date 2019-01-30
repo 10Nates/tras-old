@@ -803,7 +803,7 @@ module.exports = {
         } else if (cmd == 'dice' && diceActive) {
             //gives random lvl between 0 and 100, then sets the progress appropriately
             const lvl = Math.round(Math.random() * 100)
-            var progress = Math.ceil(Math.pow(2, lvl)) + Math.ceil(Math.random() * 9)
+            var progress = Math.ceil(Math.pow(2, lvl)) + Math.floor(Math.random() * (Math.pow(2, lvl - 0.33)))
             setProg(progress)
             jfile.save()
             return [lvl, progress]
