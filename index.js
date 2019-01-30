@@ -990,7 +990,7 @@ bot.on('message', (message) => {
         //check subcommand
         if (la[0] == 'info') {
             if (la[1] == '-real') {
-                var msg = `TRAS' "progress" meter is based off content and size of your messages, as well as similarity between your past messages.\nLevels are the logarithm of your "progress" to base 10, meaning you require 10 times the "progress" per level.\nI included the "dice roll" feature because of my thoughts about levels. However, Mee6's way of ranking is garbage, so I offer a replacement.`
+                var msg = `TRAS' "progress" meter is based off content and size of your messages, as well as similarity between your past messages.\nLevels are the logarithm of your "progress" to base 2, meaning you require 2 times the "progress" per level.\nI included the "dice roll" feature because of my thoughts about levels. However, Mee6's way of ranking is garbage, so I offer a replacement.`
             } else {
                 var msg = `Ranks are stupid. They're useless, don't mean anything, and bother you constantly. Their only purpose is to give you a number for how much you've sent. It doesn't tell you anything else, but everyone treats it like some kind of magic number. News flash, it's not! Do YOU know what the numbers are counting, or do you just assume it's meaningful? \"XP\" doesn't mean anything. There is no "XP" on Discord. I dunno, maybe that's just my opinion, but if you for some reason after this still think I like the idea, you obviously haven't been paying attention.\n**use "${prefix}info -real" for actual info**`
             }
@@ -999,7 +999,7 @@ bot.on('message', (message) => {
             if (cmd.rank('checkDice', message) == 'ON') {
                 //roll dice & set message
                 var roll = cmd.rank('dice', message)
-                var msg = `Dice rolled! Your stats are now:\nLevel: ${roll[0]}\nProgress: ${roll[1]}/${Math.pow(10, roll[0] + 1)}`
+                var msg = `Dice rolled! Your stats are now:\nLevel: ${roll[0]}\nProgress: ${roll[1]}/${Math.pow(2, roll[0] + 1)}`
             } else {
                 //set message
                 var msg = `Sorry, dice rolls are currently disabled. Ask an admin to do "${prefix}rank diceToggle" to roll dice in this server.`
@@ -1073,7 +1073,7 @@ bot.on('message', (message) => {
         } else {
             //get & format
             var got = cmd.rank('get', message)
-            var msg = `Level: ${got[0]}\nProgress: ${got[1]}/${Math.pow(10, got[0] + 1)}`
+            var msg = `Level: ${got[0]}\nProgress: ${got[1]}/${Math.pow(2, got[0] + 1)}`
         }
         //send message & log & prevent unneeded code
         message.channel.send(msg)

@@ -670,7 +670,7 @@ module.exports = {
         var data = {}
         data.progress = jfile.get(`${msg.guild.id}.${msg.author.id}.prog`)
         function lvl(prog) {
-            var lvl = Math.floor(Math.log10(prog))
+            var lvl = Math.floor(Math.log2(prog))
             if (!lvl || lvl == -Infinity || lvl == Infinity) { lvl = 0 }
             return lvl
         }
@@ -803,7 +803,7 @@ module.exports = {
         } else if (cmd == 'dice' && diceActive) {
             //gives random lvl between 0 and 100, then sets the progress appropriately
             const lvl = Math.round(Math.random() * 100)
-            var progress = Math.ceil(Math.pow(10, lvl)) + Math.ceil(Math.random() * 9)
+            var progress = Math.ceil(Math.pow(2, lvl)) + Math.ceil(Math.random() * 9)
             setProg(progress)
             jfile.save()
             return [lvl, progress]

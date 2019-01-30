@@ -1,6 +1,6 @@
 # TRAS
 # Text-Based Response Automation System
-# Version 2.5
+# Version 2.6
 __Made by Nathan B @ https://nate.illegaldomain.com__
 ----------------------------------
 
@@ -129,6 +129,8 @@ GENERAL DETAILS
 >All commands work in DMs. (There are some exeptions due to Discord's limits, or having no purpose)
 
 >This bot has 8 different dependencies. (9 counting troubleshooting dependencies)
+
+>Ranking levels are base 2 logirithms of your progress.
 
 ----------------------------------
 
