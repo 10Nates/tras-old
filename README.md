@@ -126,7 +126,7 @@ GENERAL DETAILS
 
 >ALL commands (except for some modifiers) work with aNY CapItaLIzATIoN.
 
->All commands work in DMs. (There are some exeptions due to Discord's limits.)
+>All commands work in DMs. (There are some exeptions due to Discord's limits, or having no purpose)
 
 >This bot has 8 different dependencies. (9 counting troubleshooting dependencies)
 
