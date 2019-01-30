@@ -1002,7 +1002,7 @@ bot.on('message', (message) => {
                 var msg = `Dice rolled! Your stats are now:\nLevel: ${roll[0]}\nProgress: ${roll[1]}/${10 ^ (roll[0] + 1)}`
             } else {
                 //set message
-                var msg = `Sorry, dice rolls are currently disabled. Ask an admin to do "${rank} diceToggle" to roll dice in this server.`
+                var msg = `Sorry, dice rolls are currently disabled. Ask an admin to do "${prefix}rank diceToggle" to roll dice in this server.`
             }
         } else if (la[0] == 'checkdice') {
             //set message
