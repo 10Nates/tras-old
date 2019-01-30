@@ -1062,7 +1062,7 @@ bot.on('message', (message) => {
                 var msg = `Format: ${prefix}rank set [user|amount] [amount]`
             }
         } else if (la[0] == 'dicetoggle') {
-            if (bot.channels.get(message.guild.id).permissionsFor(message.author).has("ADMINISTRATOR")) {
+            if (message.guild.member(message.author.id).hasPermission('ADMINISTRATOR')) {
                 //toggle dice & set response
                 var toggle = cmd.rank('diceToggle', message)
                 var msg = `Dice rolling is now ${toggle}`
