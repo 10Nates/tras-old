@@ -59,7 +59,6 @@ bot.on('message', (message) => {
             }
         }
     }
-    prefix = 'txt-testing.' //REMOVE
 
     //Run listener function
     cmd.listener('run', message, bot)
