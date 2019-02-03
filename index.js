@@ -1056,6 +1056,9 @@ bot.on('message', (message) => {
             } else if (la[1]) {
                 //catch- invalid perms- set response
                 var msg = "Only admins can reset other people's rank"
+            } else {
+                cmd.rank('reset', message, message.author.id)
+                var msg = "Your rank has been reset!"
             }
         } else if (la[0] == 'set') {
             if (!message.guild.member(message.author.id).hasPermission('ADMINISTRATOR')) {
