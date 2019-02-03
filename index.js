@@ -1044,7 +1044,7 @@ bot.on('message', (message) => {
             //set message
             var msg = `Dice rolls are currently ${cmd.rank('checkDice', message)}`
         } else if (la[0] == 'reset') {
-            if (la[1] && bot.channels.get(message.guild.id).permissionsFor(message.author).has("ADMINISTRATOR")) {
+            if (la[1] && message.guild.member(message.author.id).hasPermission('ADMINISTRATOR')) {
                 var usr = la[1].replace(/<@|>/g, '')
                 if (bot.users.get(usr)) {
                     cmd.rank('reset', message, usr)
@@ -1058,7 +1058,7 @@ bot.on('message', (message) => {
                 var msg = "Only admins can reset other people's rank"
             }
         } else if (la[0] == 'set') {
-            if (!bot.channels.get(message.guild.id).permissionsFor(message.author).has("ADMINISTRATOR")) {
+            if (!message.guild.member(message.author.id).hasPermission('ADMINISTRATOR')) {
                 //catch- invalid perms- set response
                 var msg = "Only admins can set ranks"
             } else if (la[1]) {
