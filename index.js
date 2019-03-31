@@ -841,7 +841,7 @@ bot.on('message', (message) => {
             .setAuthor('About TRAS', bot.user.avatarURL)
             .setTitle('Text-based Response Automation System')
             .setDescription(`Version ${cmd.version()}`)
-            .addField('_ _\nWebsite: https://tras.illegaldomain.com', 'Not actually illegal, a lot of info on-site.')
+            .addField('_ _\nWebsite: https://tras.iunctiozero.com', 'A lot of helpful info on-site (most can be accessed with commands anyway)')
             .addField('_ _\nAdd Link: http://bit.ly/addtras', '_ _')
             .addField('_ _\nDBL Page: https://discordbots.org/bot/494273862427738113', '_ _')
             .addField(`_ _\nGrab prefix & help command:`, `<@${bot.user.id}> PREFIX`)
@@ -850,7 +850,7 @@ bot.on('message', (message) => {
             .addField('_ _\nOther Credit:', `All the scripts and knowledge found on Stack Overflow, Stack Exchange, Reddit, An Idiot's Guide, Nodejs.org, and Discord.js.org.`)
             .addField('_ _\nLegal:', 'TRAS is under the GNU general public license. see info here: http://bit.ly/GPLv3summary')
             .addBlankField()
-            .setImage('https://tras.illegaldomain.com/img/traslogo.png')
+            .setImage('https://tras.iunctiozero.com/img/traslogo.png')
         //send embed to author
         message.author.send(embed)
         //respond in original channel

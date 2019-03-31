@@ -8,7 +8,7 @@ A Discord bot for text-based commands and responses.
 
 This may sound like any other bot at first, but this is **much** more than basic text.
 
-![](https://tras.illegaldomain.com/img/traslogo.png)
+![](https://tras.iunctiozero.com/img/traslogo.png)
 
 ----------------------------------
 __LIST OF COMMANDS__
