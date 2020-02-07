@@ -10,7 +10,7 @@ const fs = require('fs')
 var capcon = require('capture-console');
 console.log('Other scripts loaded')
 const bigOof = 'oof oof oof     oof oof oof     oof oof oof\noof        oof     oof        oof     oof\noof        oof     oof        oof     oof oof oof\noof        oof     oof        oof     oof\noof oof oof     oof oof oof     oof'
-const bigF = 'F F F F F F F\nF F \nF F F F F F F\nF F\nF F'
+const bigF = 'F F F F F F\nF F \nF F F F F F\nF F\nF F'
 
 //start bot
 console.log('Starting bot...')
@@ -99,6 +99,7 @@ bot.on('message', (message) => {
             .addField(`_ _\n${prefix}jumble`, `Jumbles the words in a sentence so it's confusing to read.\n*Format: ${prefix}jumble [text]*`)
             .addField(`_ _\n${prefix}emojify`, `Turn all characters into emojis.\n*Format: ${prefix}emojify [text]*`)
             .addField(`_ _\n${prefix}ebojify`, `Turn certain characters into :b:.\n*Format: ${prefix}ebojify [text]*`)
+            .addField(`_ _\n${prefix}flagify`, `Turn all letters into regional indicators, creating flags.\n*Format: ${prefix}flagify [text]*`)
             .addField(`_ _\n${prefix}superscript`, `Turn all numbers and letters plus a few math symbols into superscript. Some letters are always lowercase or replaced with something similar due to Unicode limitations.\n*Format: ${prefix}superscript [text]*`)
             .addField(`_ _\n${prefix}unicodify`, `Turn all numbers and letters into a non-Latin equivilant.\n*Format: ${prefix}unicodify [text]*`)
             .addField(`_ _\n${prefix}bold`, `Bolds all Latin letters and numbers using Unicode.\n*Format: ${prefix}bold [text]*`)
@@ -173,6 +174,18 @@ bot.on('message', (message) => {
         //replace with 🅱 
         msg = msgpre.replace(/b/g, '🅱️').replace(/p/g, '🅱️').replace(/g/g, '🅱️')
             .replace(/c/g, '🅱️').replace(/d/g, '🅱️');
+        //send
+        message.channel.send(msg);
+        cmd.logmsg(msg, message, bot);
+        //prevent running unneeded code
+        return
+    }
+
+    if (command == `${prefix}flagify`) {
+        //remove activator
+        msg0 = message.content.toLowerCase().replace(`${prefix}flagify `, '');
+        //convert
+        msg = cmd.flagconvert(msg0);
         //send
         message.channel.send(msg);
         cmd.logmsg(msg, message, bot);
@@ -302,7 +315,7 @@ bot.on('message', (message) => {
                 } else {
                     var msg = 'No custom commands on this server.'
                 }
-                if (msg.length < 2000) {
+                if (msg.length > 2000) {
                     msg = `The list of custom commands exceeds Discord's character limit. Please try using "${prefix}help" if you have under 26 commands, or contact TRAS' owner for a file.`
                 }
                 //send

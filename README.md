@@ -1,7 +1,7 @@
 # TRAS
 # Text-Based Response Automation System
-# Version 2.7
-__Made by Nathan B @ https://nate.illegaldomain.com__
+# Version 2.72
+__Made by Nathan B @ https://nate.iunctiozero.com__
 ----------------------------------
 
 A Discord bot for text-based commands and responses.
@@ -45,6 +45,10 @@ Turn all characters into emojis.
 Turn certain characters into 🅱️.
 *Format: txt.ebojify [text]*
  
+>__txt.flagify__
+Turn all letters into regional indicators, creating flags.
+*Format: txt.flagidy [text]*
+
 >__txt.superscript__
 Turn all numbers and letters plus a few math symbols into superscript. Some letters are always lowercase or replaced with something similar due to Unicode limitations.
 *Format: txt.superscript [text]*
