@@ -4,7 +4,7 @@
   "description": "Text-based Response Automation System",
   "main": "index.js",
   "author": "Nathan B",
-  "license": "gpl-3.0",
+  "license": "mit",
   "dependencies": {
     "capture-console": "^1.0.1",
     "discord.js": "^11.4.2",

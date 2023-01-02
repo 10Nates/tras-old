@@ -861,7 +861,7 @@ bot.on('message', (message) => {
             .addField('_ _\nCreated By: Nathan B', 'AKA @10Nates / Discord ID: 186507006008360960')
             .addField('_ _\nNPM Modules Used:', ']Discord.js\n]Edit-json-file\n]Figlet\n]Moby\n]Remove-punctuation\n]Wink-pos-tagger\nWord-definition\n]Word-list')
             .addField('_ _\nOther Credit:', `All the scripts and knowledge found on Stack Overflow, Stack Exchange, Reddit, An Idiot's Guide, Nodejs.org, and Discord.js.org.`)
-            .addField('_ _\nLegal:', 'TRAS is under the GNU general public license. see info here: http://bit.ly/GPLv3summary')
+            .addField('_ _\nLegal:', 'TRAS is under the MIT license.')
             .addBlankField()
             .setImage('https://tras.iunctiozero.com/img/traslogo.png')
         //send embed to author
