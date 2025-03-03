@@ -1,3 +1,9 @@
+# WARNING: PROJECT DEFUNCT. THIS IS SUPERCEDED BY TRAS 3 WRITTEN IN GO.
+*Note: This repo is called tras-old from the getgo because this 
+was a private repo up until work had already started on new tras.*
+
+-----
+
 # TRAS
 # Text-Based Response Automation System
 # Version 2.72
